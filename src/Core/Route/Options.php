@@ -29,6 +29,42 @@ class Options implements Common\Route\Options {
 	private $options = [];
 
 	/**
+	 * Constructor. Sets up the properties.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param array $options Optional. Route options. Defaults to empty array.
+	 */
+	public function __construct( array $options = [] ) {
+
+		if ( $options ) {
+			$this->options[] = $options;
+		}
+	}
+
+	/**
+	 * Returns a new route options object, instantiated with an entry according to the given arguments.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param Endpoint\Handler $handler Optional. Request handler object. Defaults to null.
+	 * @param Common\Arguments $args    Optional. Endpoint arguments object. Defaults to null.
+	 * @param string           $methods Optional. Comma-separated HTTP verbs. Defaults to self::DEFAULT_METHODS.
+	 * @param array            $options Optional. Additional options array. Defaults to empty array.
+	 *
+	 * @return self Route options object.
+	 */
+	public static function from_arguments(
+		Endpoint\Handler $handler = null,
+		Common\Arguments $args = null,
+		$methods = self::DEFAULT_METHODS,
+		array $options = []
+	) {
+
+		return ( new self() )->add_from_arguments( $handler, $args, $methods, $options );
+	}
+
+	/**
 	 * Returns a new route options object with the given arguments.
 	 *
 	 * @since 1.0.0
@@ -36,12 +72,18 @@ class Options implements Common\Route\Options {
 	 * @param callable $callback Endpoint callback.
 	 * @param array    $args     Optional. Endpoint arguments. Defaults to empty array.
 	 * @param string   $methods  Optional. Comma-separated HTTP verbs. Defaults to self::DEFAULT_METHODS.
+	 * @param array    $options  Optional. Route options. Defaults to empty array.
 	 *
 	 * @return self Route options object.
 	 */
-	public static function with_callback( $callback, $args = [ ], $methods = self::DEFAULT_METHODS ) {
+	public static function with_callback(
+		$callback,
+		$args = [],
+		$methods = self::DEFAULT_METHODS,
+		array $options = []
+	) {
 
-		return ( new self() )->add( compact( 'methods', 'callback', 'args' ) );
+		return new self( compact( 'methods', 'callback', 'args' ) + $options );
 	}
 
 	/**
@@ -49,13 +91,14 @@ class Options implements Common\Route\Options {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param Endpoint\Schema $schema Schema object.
+	 * @param Endpoint\Schema $schema  Schema object.
+	 * @param array           $options Optional. Route options. Defaults to empty array.
 	 *
 	 * @return self Route options object.
 	 */
-	public static function with_schema( Endpoint\Schema $schema ) {
+	public static function with_schema( Endpoint\Schema $schema, array $options = [] ) {
 
-		return ( new self() )->set_schema( $schema );
+		return ( new self( $options ) )->set_schema( $schema );
 	}
 
 	/**

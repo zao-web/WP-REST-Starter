@@ -1,9 +1,5 @@
 language: php
 
-cache:
-  directories:
-    - node_modules
-
 php:
   - 5.4
   - 5.5
@@ -25,10 +21,8 @@ before_install:
   - composer self-update
 
 install:
-  - npm i -g npm
-  - npm i -g grunt-cli
-  - travis_retry npm i
   - travis_retry composer install
 
 script:
-  - grunt ci
+  - find src tests/php \( -name '*.php' \) -exec php -l {} \;
+  - phpunit

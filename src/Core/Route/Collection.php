@@ -51,6 +51,18 @@ class Collection implements Common\Route\Collection {
 	}
 
 	/**
+	 * Returns the routes in array form.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return Common\Route\Route[] Routes array.
+	 */
+	public function to_array() {
+
+		return $this->routes;
+	}
+
+	/**
 	 * Returns an iterator object for the internal routes array.
 	 *
 	 * @since 1.0.0

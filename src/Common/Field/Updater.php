@@ -19,7 +19,7 @@ interface Updater {
 	 * @param object $object     Object from the response.
 	 * @param string $field_name Field name.
 	 *
-	 * @return bool Whether or not the field was updated usccessfully.
+	 * @return bool Whether or not the field was updated successfully.
 	 */
 	public function update_value( $value, $object, $field_name );
 }

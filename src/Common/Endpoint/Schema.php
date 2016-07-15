@@ -13,15 +13,6 @@ use Inpsyde\WPRESTStarter\Common;
 interface Schema extends Common\Schema {
 
 	/**
-	 * Returns the base of the schema.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @return string Namespace/URL base.
-	 */
-	public function get_base();
-
-	/**
 	 * Returns the properties of the schema.
 	 *
 	 * @since 1.0.0

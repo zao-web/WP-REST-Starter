@@ -38,11 +38,13 @@ class Registry implements Common\Field\Registry {
 		 *
 		 * @param Common\Field\Collection $fields Field collection object.
 		 */
-		do_action( 'wp_api_starter.register_fields', $fields );
+		do_action( 'wp_rest_starter.register_fields', $fields );
 
-		/** @var Common\Field\Field $field */
-		foreach ( $fields as $resource => $field ) {
-			register_rest_field( $resource, $field->get_name(), $field->get_definition() );
+		foreach ( $fields as $resource => $resource_fields ) {
+			/** @var Common\Field\Field $field */
+			foreach ( $resource_fields as $field_name => $field ) {
+				register_rest_field( $resource, $field_name, $field->get_definition() );
+			}
 		}
 	}
 }

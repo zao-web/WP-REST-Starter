@@ -33,4 +33,13 @@ interface Collection extends IteratorAggregate {
 	 * @return $this
 	 */
 	public function delete( $index );
+
+	/**
+	 * Returns the routes in array form.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return Route[] Routes array.
+	 */
+	public function to_array();
 }

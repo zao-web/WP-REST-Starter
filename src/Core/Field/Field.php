@@ -13,7 +13,7 @@ use Inpsyde\WPRESTStarter\Common;
 class Field implements Common\Field\Field {
 
 	/**
-	 * @var Definition
+	 * @var Common\Arguments
 	 */
 	private $definition;
 
@@ -26,9 +26,9 @@ class Field implements Common\Field\Field {
 	 * Constructor. Sets up the properties.
 	 *
 	 * @param string     $name       Field name.
-	 * @param Definition $definition Field definition object.
+	 * @param Common\Arguments $definition Field definition object.
 	 */
-	public function __construct( $name, Definition $definition ) {
+	public function __construct( $name, Common\Arguments $definition ) {
 
 		$this->name = (string) $name;
 

@@ -35,4 +35,13 @@ interface Collection extends IteratorAggregate {
 	 * @return $this
 	 */
 	public function delete( $resource, $field_name );
+
+	/**
+	 * Returns the fields in array form.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return Field[] Fields array.
+	 */
+	public function to_array();
 }

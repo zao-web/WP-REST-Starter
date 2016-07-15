@@ -53,6 +53,18 @@ class Collection implements Common\Field\Collection {
 	}
 
 	/**
+	 * Returns the fields in array form.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return Common\Field\Field[] Fields array.
+	 */
+	public function to_array() {
+
+		return $this->fields;
+	}
+
+	/**
 	 * Returns an iterator object for the internal fields array.
 	 *
 	 * @since 1.0.0

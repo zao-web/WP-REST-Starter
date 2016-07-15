@@ -17,6 +17,7 @@ class AccessTest extends TestCase {
 	 * Tests the expected value is returned, if present.
 	 *
 	 * @since  1.0.0
+	 *
 	 * @covers Inpsyde\WPRESTStarter\Core\Field\Access::get_fields()
 	 *
 	 * @return void
@@ -36,6 +37,7 @@ class AccessTest extends TestCase {
 	 * Tests an empty array is returned if there are no fields registered for the given resource.
 	 *
 	 * @since  1.0.0
+	 *
 	 * @covers Inpsyde\WPRESTStarter\Core\Field\Access::get_fields()
 	 *
 	 * @return void

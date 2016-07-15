@@ -15,16 +15,16 @@ class Definition implements Common\Arguments {
 	/**
 	 * @var array
 	 */
-	private $definition = [];
+	private $definition;
 
 	/**
 	 * Constructor. Sets up the properties.
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param array $definition Field definition.
+	 * @param array $definition Optional. Field definition. Defaults to empty array.
 	 */
-	public function __construct( array $definition ) {
+	public function __construct( array $definition = [] ) {
 
 		$this->definition = $definition;
 	}
@@ -37,7 +37,7 @@ class Definition implements Common\Arguments {
 	 * @param Common\Field\Reader  $reader     Optional. Field reader object. Defaults to null.
 	 * @param Common\Field\Updater $updater    Optional. Field updater object. Defaults to null.
 	 * @param Common\Schema        $schema     Optional. Schema object. Defaults to null.
-	 * @param array                $definition Optional. Field definition. Defulst to empty array.
+	 * @param array                $definition Optional. Field definition. Defaults to empty array.
 	 *
 	 * @return self Definition object.
 	 */
