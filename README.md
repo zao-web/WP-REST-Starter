@@ -4,6 +4,8 @@
 
 > Starter package for working with the WordPress REST API in an object-oriented fashion.
 
+![WP REST Starter](resources/images/banner.png)
+
 ## Introduction
 
 Since the infrastructure of the WordPress REST API got merged into Core and more and more will be integrated, it's obvious for others to jump on the bandwagon. This package provides you with virtually anything you need to start _feeling RESTful_.
