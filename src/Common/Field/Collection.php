@@ -9,6 +9,7 @@ use IteratorAggregate;
  *
  * @package Inpsyde\WPRESTStarter\Common\Field
  * @since   1.0.0
+ * @since   1.1.0 Removed `to_array()` method.
  */
 interface Collection extends IteratorAggregate {
 
@@ -20,7 +21,7 @@ interface Collection extends IteratorAggregate {
 	 * @param string $resource Resource name to add the field to.
 	 * @param Field  $field    Field object.
 	 *
-	 * @return $this
+	 * @return static Collection object.
 	 */
 	public function add( $resource, Field $field );
 
@@ -32,16 +33,7 @@ interface Collection extends IteratorAggregate {
 	 * @param string $resource   Resource name to delete the field from.
 	 * @param string $field_name Field name.
 	 *
-	 * @return $this
+	 * @return static Collection object.
 	 */
 	public function delete( $resource, $field_name );
-
-	/**
-	 * Returns the fields in array form.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @return Field[] Fields array.
-	 */
-	public function to_array();
 }
