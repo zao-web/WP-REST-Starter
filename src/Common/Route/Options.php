@@ -2,20 +2,15 @@
 
 namespace Inpsyde\WPRESTStarter\Common\Route;
 
+use Inpsyde\WPRESTStarter\Common\Arguments;
+
 /**
  * Interface for all route options implementations.
  *
- * @package Inpsyde\WPRESTStarter\Common\Route
- * @since   1.0.0
+ * @deprecated 1.1.0 Deprecated in favor of {@see Arguments}.
+ * @package    Inpsyde\WPRESTStarter\Common\Route
+ * @since      1.0.0
  */
-interface Options {
+interface Options extends Arguments {
 
-	/**
-	 * Returns the route options in array form.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @return array Route options.
-	 */
-	public function to_array();
 }
