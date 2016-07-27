@@ -70,15 +70,16 @@ final class Factory implements Common\Factory {
 	 * Returns a new factory object, instantiated with the given arguments.
 	 *
 	 * @since 1.0.0
+	 * @since 1.1.0 Make use of late static binding (i.e., return a new instance of `static` instead of `self`).
 	 *
 	 * @param string $base          Fully qualified name of the base class or interface.
 	 * @param string $default_class Fully qualified name of the default class.
 	 *
-	 * @return self Factory object.
+	 * @return static Factory object.
 	 */
 	public static function with_default_class( $base, $default_class ) {
 
-		return new self( (string) $base, (string) $default_class );
+		return new static( (string) $base, (string) $default_class );
 	}
 
 	/**
