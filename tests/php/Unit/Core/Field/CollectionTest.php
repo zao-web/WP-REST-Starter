@@ -59,13 +59,14 @@ class CollectionTest extends TestCase {
 	 * Tests returning an empty fields array.
 	 *
 	 * @since  1.0.0
+	 * @since  1.1.0 Use `Testee::getIterator()` instead of deprecated `Testee::to_array()`.
 	 *
-	 * @covers Inpsyde\WPRESTStarter\Core\Field\Collection::to_array()
+	 * @covers Inpsyde\WPRESTStarter\Core\Field\Collection::getIterator()
 	 *
 	 * @return void
 	 */
 	public function test_getting_empty_array() {
 
-		$this->assertSame( [], ( new Testee() )->to_array() );
+		$this->assertSame( [], iterator_to_array( ( new Testee() )->getIterator() ) );
 	}
 }

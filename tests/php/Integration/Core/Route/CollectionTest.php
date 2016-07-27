@@ -19,10 +19,11 @@ class CollectionTest extends TestCase {
 	 * Tests adding and deleting routes.
 	 *
 	 * @since  1.0.0
+	 * @since  1.1.0 Use `Testee::getIterator()` instead of deprecated `Testee::to_array()`.
 	 *
 	 * @covers Inpsyde\WPRESTStarter\Core\Route\Collection::add()
 	 * @covers Inpsyde\WPRESTStarter\Core\Route\Collection::delete()
-	 * @covers Inpsyde\WPRESTStarter\Core\Route\Collection::to_array()
+	 * @covers Inpsyde\WPRESTStarter\Core\Route\Collection::getIterator()
 	 *
 	 * @return void
 	 */
@@ -34,10 +35,8 @@ class CollectionTest extends TestCase {
 
 		$route = new Route( $url, new Options() );
 
-		$routes = $testee->add( $route )->to_array();
-		$this->assertSame( $routes[0], $route );
+		$this->assertSame( $route, iterator_to_array( $testee->add( $route )->getIterator() )[0] );
 
-		$routes = $testee->delete( 0 )->to_array();
-		$this->assertTrue( empty( $routes[0] ) );
+		$this->assertSame( 0, count( iterator_to_array( $testee->delete( 0 )->getIterator() ) ) );
 	}
 }
