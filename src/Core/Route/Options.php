@@ -12,7 +12,7 @@ use WP_REST_Server;
  * @package Inpsyde\WPRESTStarter\Core\Route
  * @since   1.0.0
  */
-class Options implements Common\Route\Options {
+class Options implements Common\Arguments {
 
 	/**
 	 * Default comma-separated HTTP verbs.
@@ -46,13 +46,14 @@ class Options implements Common\Route\Options {
 	 * Returns a new route options object, instantiated with an entry according to the given arguments.
 	 *
 	 * @since 1.0.0
+	 * @since 1.1.0 Make use of late static binding (i.e., return a new instance of `static` instead of `self`).
 	 *
 	 * @param Endpoint\Handler $handler Optional. Request handler object. Defaults to null.
 	 * @param Common\Arguments $args    Optional. Endpoint arguments object. Defaults to null.
 	 * @param string           $methods Optional. Comma-separated HTTP verbs. Defaults to self::DEFAULT_METHODS.
 	 * @param array            $options Optional. Additional options array. Defaults to empty array.
 	 *
-	 * @return self Route options object.
+	 * @return static Route options object.
 	 */
 	public static function from_arguments(
 		Endpoint\Handler $handler = null,
@@ -61,20 +62,21 @@ class Options implements Common\Route\Options {
 		array $options = []
 	) {
 
-		return ( new self() )->add_from_arguments( $handler, $args, $methods, $options );
+		return ( new static() )->add_from_arguments( $handler, $args, $methods, $options );
 	}
 
 	/**
 	 * Returns a new route options object with the given arguments.
 	 *
 	 * @since 1.0.0
+	 * @since 1.1.0 Make use of late static binding (i.e., return a new instance of `static` instead of `self`).
 	 *
 	 * @param callable $callback Endpoint callback.
 	 * @param array    $args     Optional. Endpoint arguments. Defaults to empty array.
 	 * @param string   $methods  Optional. Comma-separated HTTP verbs. Defaults to self::DEFAULT_METHODS.
 	 * @param array    $options  Optional. Route options. Defaults to empty array.
 	 *
-	 * @return self Route options object.
+	 * @return static Route options object.
 	 */
 	public static function with_callback(
 		$callback,
@@ -83,22 +85,23 @@ class Options implements Common\Route\Options {
 		array $options = []
 	) {
 
-		return new self( compact( 'methods', 'callback', 'args' ) + $options );
+		return new static( compact( 'methods', 'callback', 'args' ) + $options );
 	}
 
 	/**
 	 * Returns a new route options object with a schema callback on the given object.
 	 *
 	 * @since 1.0.0
+	 * @since 1.1.0 Make use of late static binding (i.e., return a new instance of `static` instead of `self`).
 	 *
 	 * @param Endpoint\Schema $schema  Schema object.
 	 * @param array           $options Optional. Route options. Defaults to empty array.
 	 *
-	 * @return self Route options object.
+	 * @return static Route options object.
 	 */
 	public static function with_schema( Endpoint\Schema $schema, array $options = [] ) {
 
-		return ( new self( $options ) )->set_schema( $schema );
+		return ( new static( $options ) )->set_schema( $schema );
 	}
 
 	/**
@@ -108,7 +111,7 @@ class Options implements Common\Route\Options {
 	 *
 	 * @param array $options Options array.
 	 *
-	 * @return $this
+	 * @return static Options object.
 	 */
 	public function add( array $options ) {
 
@@ -127,7 +130,7 @@ class Options implements Common\Route\Options {
 	 * @param string           $methods Optional. Comma-separated HTTP verbs. Defaults to self::DEFAULT_METHODS.
 	 * @param array            $options Optional. Additional options array. Defaults to empty array.
 	 *
-	 * @return $this
+	 * @return static Options object.
 	 */
 	public function add_from_arguments(
 		Endpoint\Handler $handler = null,
@@ -158,7 +161,7 @@ class Options implements Common\Route\Options {
 	 *
 	 * @param Endpoint\Schema $schema Schema object.
 	 *
-	 * @return $this
+	 * @return static Options object.
 	 */
 	public function set_schema( Endpoint\Schema $schema ) {
 
