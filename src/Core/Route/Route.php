@@ -13,7 +13,7 @@ use Inpsyde\WPRESTStarter\Common;
 class Route implements Common\Route\Route {
 
 	/**
-	 * @var Common\Route\Options
+	 * @var Common\Arguments
 	 */
 	private $options;
 
@@ -27,10 +27,10 @@ class Route implements Common\Route\Route {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param string               $url     Base URL of the route.
-	 * @param Common\Route\Options $options Route options object.
+	 * @param string           $url     Base URL of the route.
+	 * @param Common\Arguments $options Route options object.
 	 */
-	public function __construct( $url, Common\Route\Options $options ) {
+	public function __construct( $url, Common\Arguments $options ) {
 
 		$this->url = trim( $url, '/' );
 
