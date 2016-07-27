@@ -402,7 +402,7 @@ class SomeFieldUpdater implements Updater {
 	 *
 	 * @param callable $permission_callback Optional. Permission callback. Defaults to null.
 	 */
-	public function __construct( $permission_callback = null ) {
+	public function __construct( callable $permission_callback = null ) {
 
 		if ( $permission_callback ) {
 			$this->permission_callback = $permission_callback;
