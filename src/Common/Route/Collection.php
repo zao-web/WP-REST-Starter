@@ -9,6 +9,7 @@ use IteratorAggregate;
  *
  * @package Inpsyde\WPRESTStarter\Common\Route
  * @since   1.0.0
+ * @since   1.1.0 Removed `to_array()` method.
  */
 interface Collection extends IteratorAggregate {
 
@@ -19,7 +20,7 @@ interface Collection extends IteratorAggregate {
 	 *
 	 * @param Route $route Route object.
 	 *
-	 * @return $this
+	 * @return static Collection object.
 	 */
 	public function add( Route $route );
 
@@ -30,16 +31,7 @@ interface Collection extends IteratorAggregate {
 	 *
 	 * @param int $index Index of the route object.
 	 *
-	 * @return $this
+	 * @return static Collection object.
 	 */
 	public function delete( $index );
-
-	/**
-	 * Returns the routes in array form.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @return Route[] Routes array.
-	 */
-	public function to_array();
 }
