@@ -10,11 +10,12 @@ use Inpsyde\WPRESTStarter\Common;
  *
  * @package Inpsyde\WPRESTStarter\Core\Field
  * @since   1.0.0
+ * @since   1.1.0 Deprecated `to_array()` method.
  */
 class Collection implements Common\Field\Collection {
 
 	/**
-	 * @var Common\Field\Field[]
+	 * @var Common\Field\Field[][]
 	 */
 	private $fields = [];
 
@@ -26,7 +27,7 @@ class Collection implements Common\Field\Collection {
 	 * @param string             $resource Resource name to add the field to.
 	 * @param Common\Field\Field $field    Field object.
 	 *
-	 * @return $this
+	 * @return static Collection object.
 	 */
 	public function add( $resource, Common\Field\Field $field ) {
 
@@ -43,7 +44,7 @@ class Collection implements Common\Field\Collection {
 	 * @param string $resource   Resource name to delete the field from.
 	 * @param string $field_name Field name.
 	 *
-	 * @return $this
+	 * @return static Collection object.
 	 */
 	public function delete( $resource, $field_name ) {
 
@@ -55,9 +56,10 @@ class Collection implements Common\Field\Collection {
 	/**
 	 * Returns the fields in array form.
 	 *
-	 * @since 1.0.0
+	 * @deprecated 1.1.0 If you really need this, use `iterator_to_array( $this->getIterator() );` instead.
+	 * @since      1.0.0
 	 *
-	 * @return Common\Field\Field[] Fields array.
+	 * @return Common\Field\Field[][] Fields array.
 	 */
 	public function to_array() {
 
