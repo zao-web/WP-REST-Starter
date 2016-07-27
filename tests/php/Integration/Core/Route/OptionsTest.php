@@ -2,9 +2,6 @@
 
 namespace Inpsyde\WPRESTStarter\Tests\Integration\Core\Route;
 
-use Inpsyde\WPRESTStarter\Common\Arguments;
-use Inpsyde\WPRESTStarter\Common\Endpoint\Handler;
-use Inpsyde\WPRESTStarter\Common\Endpoint\Schema;
 use Inpsyde\WPRESTStarter\Core\Route\Options as Testee;
 use Inpsyde\WPRESTStarter\Tests\TestCase;
 use Mockery;
@@ -30,18 +27,14 @@ class OptionsTest extends TestCase {
 	 */
 	public function test_creating_from_arguments() {
 
-		$handler = Mockery::mock( '\Inpsyde\WPRESTStarter\Common\Endpoint\Handler' );
+		$handler = Mockery::mock( 'Inpsyde\WPRESTStarter\Common\Endpoint\Handler' );
 
-		$args = Mockery::mock( '\Inpsyde\WPRESTStarter\Common\Arguments' );
+		$args = Mockery::mock( 'Inpsyde\WPRESTStarter\Common\Arguments' );
 		$args->shouldReceive( 'to_array' )
 			->andReturn( [] );
 
 		$methods = 'some, methods, here';
 
-		/**
-		 * @var Handler   $handler
-		 * @var Arguments $args
-		 */
 		$testee = Testee::from_arguments(
 			$handler,
 			$args,
@@ -159,9 +152,8 @@ class OptionsTest extends TestCase {
 	 */
 	public function test_creating_with_schema() {
 
-		$schema = Mockery::mock( '\Inpsyde\WPRESTStarter\Common\Endpoint\Schema' );
+		$schema = Mockery::mock( 'Inpsyde\WPRESTStarter\Common\Endpoint\Schema' );
 
-		/** @var Schema $schema */
 		$testee = Testee::with_schema( $schema, [ 'key' => 'value' ] );
 
 		$expected = [
@@ -187,9 +179,8 @@ class OptionsTest extends TestCase {
 	 */
 	public function test_creating_with_schema_only() {
 
-		$schema = Mockery::mock( '\Inpsyde\WPRESTStarter\Common\Endpoint\Schema' );
+		$schema = Mockery::mock( 'Inpsyde\WPRESTStarter\Common\Endpoint\Schema' );
 
-		/** @var Schema $schema */
 		$testee = Testee::with_schema( $schema );
 
 		$expected = [
@@ -235,7 +226,7 @@ class OptionsTest extends TestCase {
 	 */
 	public function test_set_schema() {
 
-		$schema = Mockery::mock( '\Inpsyde\WPRESTStarter\Common\Endpoint\Schema' );
+		$schema = Mockery::mock( 'Inpsyde\WPRESTStarter\Common\Endpoint\Schema' );
 
 		$testee = ( new Testee() )->set_schema( $schema );
 

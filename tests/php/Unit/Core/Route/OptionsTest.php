@@ -66,9 +66,8 @@ class OptionsTest extends TestCase {
 
 		$testee = new Testee();
 
-		$schema = Mockery::mock( '\Inpsyde\WPRESTStarter\Common\Endpoint\Schema' );
+		$schema = Mockery::mock( 'Inpsyde\WPRESTStarter\Common\Endpoint\Schema' );
 
-		/** @var Schema $schema */
 		$this->assertSame( $testee, $testee->set_schema( $schema ) );
 	}
 

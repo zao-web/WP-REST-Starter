@@ -4,7 +4,6 @@ namespace Inpsyde\WPRESTStarter\Tests\Unit\Core\Route;
 
 use ArrayIterator;
 use Brain\Monkey;
-use Inpsyde\WPRESTStarter\Common\Route\Collection;
 use Inpsyde\WPRESTStarter\Core\Route\Registry as Testee;
 use Inpsyde\WPRESTStarter\Tests\TestCase;
 use Mockery;
@@ -30,7 +29,7 @@ class RegistryTest extends TestCase {
 
 		$namespace = 'some-namespace-here';
 
-		$routes = Mockery::mock( '\Inpsyde\WPRESTStarter\Common\Route\Collection' );
+		$routes = Mockery::mock( 'Inpsyde\WPRESTStarter\Common\Route\Collection' );
 		$routes->shouldReceive( 'getIterator' )
 			->andReturn( new ArrayIterator() );
 
@@ -38,7 +37,6 @@ class RegistryTest extends TestCase {
 			->once()
 			->with( $routes, $namespace );
 
-		/** @var Collection $routes */
 		( new Testee( $namespace ) )->register_routes( $routes );
 	}
 
@@ -55,21 +53,21 @@ class RegistryTest extends TestCase {
 
 		$namespace = 'some-namespace-here';
 
-		$route_foo = Mockery::mock( '\Inpsyde\WPRESTStarter\Common\Route\Route' )
+		$route_foo = Mockery::mock( 'Inpsyde\WPRESTStarter\Common\Route\Route' )
 			->shouldReceive( 'get_url' )
 			->andReturn( 'route_foo_url' )
 			->shouldReceive( 'get_options' )
 			->andReturn( [ 'route_foo_options' ] )
 			->getMock();
 
-		$route_bar = Mockery::mock( '\Inpsyde\WPRESTStarter\Common\Route\Route' )
+		$route_bar = Mockery::mock( 'Inpsyde\WPRESTStarter\Common\Route\Route' )
 			->shouldReceive( 'get_url' )
 			->andReturn( 'route_bar_url' )
 			->shouldReceive( 'get_options' )
 			->andReturn( [ 'route_bar_options' ] )
 			->getMock();
 
-		$routes = Mockery::mock( '\Inpsyde\WPRESTStarter\Common\Route\Collection' );
+		$routes = Mockery::mock( 'Inpsyde\WPRESTStarter\Common\Route\Collection' );
 		$routes->shouldReceive( 'getIterator' )
 			->andReturn( new ArrayIterator( [
 				$route_foo,
@@ -90,7 +88,6 @@ class RegistryTest extends TestCase {
 			->times( 2 )
 			->with( $namespace, 'route_bar_url', [ 'route_bar_options' ] );
 
-		/** @var Collection $routes */
 		( new Testee( $namespace ) )->register_routes( $routes );
 	}
 }

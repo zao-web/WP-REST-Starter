@@ -2,9 +2,6 @@
 
 namespace Inpsyde\WPRESTStarter\Tests\Integration\Core\Field;
 
-use Inpsyde\WPRESTStarter\Common\Field\Reader;
-use Inpsyde\WPRESTStarter\Common\Field\Updater;
-use Inpsyde\WPRESTStarter\Common\Schema;
 use Inpsyde\WPRESTStarter\Core\Field\Definition as Testee;
 use Inpsyde\WPRESTStarter\Tests\TestCase;
 use Mockery;
@@ -33,17 +30,12 @@ class DefinitionTest extends TestCase {
 	 */
 	public function test_creating_from_arguments() {
 
-		$reader = Mockery::mock( '\Inpsyde\WPRESTStarter\Common\Field\Reader' );
+		$reader = Mockery::mock( 'Inpsyde\WPRESTStarter\Common\Field\Reader' );
 
-		$updater = Mockery::mock( '\Inpsyde\WPRESTStarter\Common\Field\Updater' );
+		$updater = Mockery::mock( 'Inpsyde\WPRESTStarter\Common\Field\Updater' );
 
-		$schema = Mockery::mock( '\Inpsyde\WPRESTStarter\Common\Schema' );
+		$schema = Mockery::mock( 'Inpsyde\WPRESTStarter\Common\Schema' );
 
-		/**
-		 * @var Reader  $reader
-		 * @var Updater $updater
-		 * @var Schema  $schema
-		 */
 		$testee = Testee::from_arguments(
 			$reader,
 			$updater,
@@ -74,7 +66,7 @@ class DefinitionTest extends TestCase {
 	 */
 	public function test_set_get_callback() {
 
-		$reader = Mockery::mock( '\Inpsyde\WPRESTStarter\Common\Field\Reader' );
+		$reader = Mockery::mock( 'Inpsyde\WPRESTStarter\Common\Field\Reader' );
 
 		$testee = ( new Testee() )->set_get_callback( $reader );
 
@@ -120,7 +112,7 @@ class DefinitionTest extends TestCase {
 	 */
 	public function test_set_schema() {
 
-		$schema = Mockery::mock( '\Inpsyde\WPRESTStarter\Common\Schema' );
+		$schema = Mockery::mock( 'Inpsyde\WPRESTStarter\Common\Schema' );
 
 		$testee = ( new Testee() )->set_schema( $schema );
 
@@ -166,7 +158,7 @@ class DefinitionTest extends TestCase {
 	 */
 	public function test_set_update_callback() {
 
-		$updater = Mockery::mock( '\Inpsyde\WPRESTStarter\Common\Field\Updater' );
+		$updater = Mockery::mock( 'Inpsyde\WPRESTStarter\Common\Field\Updater' );
 
 		$testee = ( new Testee() )->set_update_callback( $updater );
 

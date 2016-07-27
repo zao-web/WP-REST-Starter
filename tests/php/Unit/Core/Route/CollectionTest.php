@@ -2,7 +2,6 @@
 
 namespace Inpsyde\WPRESTStarter\Tests\Unit\Core\Route;
 
-use Inpsyde\WPRESTStarter\Common\Route\Route;
 use Inpsyde\WPRESTStarter\Core\Route\Collection as Testee;
 use Inpsyde\WPRESTStarter\Tests\TestCase;
 use Mockery;
@@ -30,10 +29,7 @@ class CollectionTest extends TestCase {
 
 		$testee = new Testee();
 
-		$route = Mockery::mock( '\Inpsyde\WPRESTStarter\Common\Route\Route' );
-
-		/** @var Route $route */
-		$this->assertSame( $testee, $testee->add( $route ) );
+		$this->assertSame( $testee, $testee->add( Mockery::mock( 'Inpsyde\WPRESTStarter\Common\Route\Route' ) ) );
 	}
 
 	/**
@@ -66,6 +62,8 @@ class CollectionTest extends TestCase {
 	 */
 	public function test_getting_empty_array() {
 
-		$this->assertSame( [], iterator_to_array( ( new Testee() )->getIterator() ) );
+		$routes = iterator_to_array( ( new Testee() )->getIterator() );
+
+		$this->assertSame( [], $routes );
 	}
 }

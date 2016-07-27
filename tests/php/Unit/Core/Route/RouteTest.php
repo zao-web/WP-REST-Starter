@@ -2,7 +2,6 @@
 
 namespace Inpsyde\WPRESTStarter\Tests\Unit\Core\Route;
 
-use Inpsyde\WPRESTStarter\Common\Route\Options;
 use Inpsyde\WPRESTStarter\Core\Route\Route as Testee;
 use Inpsyde\WPRESTStarter\Tests\TestCase;
 use Mockery;
@@ -29,11 +28,10 @@ class RouteTest extends TestCase {
 
 		$options_array = [ 'some', 'values', 'here' ];
 
-		$options = Mockery::mock( '\Inpsyde\WPRESTStarter\Common\Route\Options' );
+		$options = Mockery::mock( 'Inpsyde\WPRESTStarter\Common\Arguments' );
 		$options->shouldReceive( 'to_array' )
 			->andReturn( $options_array );
 
-		/** @var Options $options */
 		$this->assertSame( $options_array, ( new Testee( null, $options ) )->get_options() );
 	}
 
@@ -51,9 +49,8 @@ class RouteTest extends TestCase {
 
 		$url = 'some-url-here';
 
-		$options = Mockery::mock( '\Inpsyde\WPRESTStarter\Common\Route\Options' );
+		$options = Mockery::mock( 'Inpsyde\WPRESTStarter\Common\Arguments' );
 
-		/** @var Options $options */
 		$this->assertSame( $url, ( new Testee( $url, $options) )->get_url() );
 	}
 }

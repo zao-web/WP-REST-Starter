@@ -2,7 +2,6 @@
 
 namespace Inpsyde\WPRESTStarter\Tests\Unit\Core\Field;
 
-use Inpsyde\WPRESTStarter\Common\Field\Field;
 use Inpsyde\WPRESTStarter\Core\Field\Collection as Testee;
 use Inpsyde\WPRESTStarter\Tests\TestCase;
 use Mockery;
@@ -30,10 +29,9 @@ class CollectionTest extends TestCase {
 
 		$testee = new Testee();
 
-		$field = Mockery::mock( '\Inpsyde\WPRESTStarter\Common\Field\Field' );
+		$field = Mockery::mock( 'Inpsyde\WPRESTStarter\Common\Field\Field' );
 		$field->shouldReceive( 'get_name' );
 
-		/** @var Field $field */
 		$this->assertSame( $testee, $testee->add( null, $field ) );
 	}
 
@@ -67,6 +65,8 @@ class CollectionTest extends TestCase {
 	 */
 	public function test_getting_empty_array() {
 
-		$this->assertSame( [], iterator_to_array( ( new Testee() )->getIterator() ) );
+		$fields = iterator_to_array( ( new Testee() )->getIterator() );
+
+		$this->assertSame( [], $fields );
 	}
 }

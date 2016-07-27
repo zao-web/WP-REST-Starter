@@ -95,6 +95,8 @@ class DefinitionTest extends TestCase {
 
 		$definition = [ 'some', 'values', 'here' ];
 
-		$this->assertSame( $definition, ( new Testee( $definition ) )->to_array() );
+		$fields = ( new Testee( $definition ) )->to_array();
+
+		$this->assertSame( $definition, $fields );
 	}
 }

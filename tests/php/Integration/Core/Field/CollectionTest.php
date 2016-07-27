@@ -38,9 +38,11 @@ class CollectionTest extends TestCase {
 		$resource = 'resource';
 
 		$fields = iterator_to_array( $testee->add( $resource, $field )->getIterator() );
-		$this->assertSame( $fields[ $resource ][ $field_name ], $field );
+
+		$this->assertSame( $field, $fields[ $resource ][ $field_name ] );
 
 		$fields = iterator_to_array( $testee->delete( $resource, $field_name )->getIterator() );
+
 		$this->assertTrue( empty( $fields[ $resource ][ $field_name ] ) );
 	}
 }

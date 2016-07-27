@@ -4,7 +4,6 @@ namespace Inpsyde\WPRESTStarter\Tests\Unit\Core\Field;
 
 use ArrayIterator;
 use Brain\Monkey;
-use Inpsyde\WPRESTStarter\Common\Field\Collection;
 use Inpsyde\WPRESTStarter\Core\Field\Registry as Testee;
 use Inpsyde\WPRESTStarter\Tests\TestCase;
 use Mockery;
@@ -31,10 +30,7 @@ class RegistryTest extends TestCase {
 
 		define( 'WP_DEBUG', false );
 
-		$fields = Mockery::mock( '\Inpsyde\WPRESTStarter\Common\Field\Collection' );
-
-		/** @var Collection $fields */
-		( new Testee() )->register_fields( $fields );
+		( new Testee() )->register_fields( Mockery::mock( 'Inpsyde\WPRESTStarter\Common\Field\Collection' ) );
 	}
 
 	/**
@@ -51,12 +47,9 @@ class RegistryTest extends TestCase {
 
 		define( 'WP_DEBUG', true );
 
-		$fields = Mockery::mock( '\Inpsyde\WPRESTStarter\Common\Field\Collection' );
+		$this->setExpectedException( 'PHPUnit_Framework_Error_Notice' );
 
-		$this->setExpectedException( '\PHPUnit_Framework_Error_Notice' );
-
-		/** @var Collection $fields */
-		( new Testee() )->register_fields( $fields );
+		( new Testee() )->register_fields( Mockery::mock( 'Inpsyde\WPRESTStarter\Common\Field\Collection' ) );
 	}
 
 	/**
@@ -70,7 +63,7 @@ class RegistryTest extends TestCase {
 	 */
 	public function test_register_fields_of_empty_collection() {
 
-		$fields = Mockery::mock( '\Inpsyde\WPRESTStarter\Common\Field\Collection' );
+		$fields = Mockery::mock( 'Inpsyde\WPRESTStarter\Common\Field\Collection' );
 		$fields->shouldReceive( 'getIterator' )
 			->andReturn( new ArrayIterator() );
 
@@ -82,7 +75,6 @@ class RegistryTest extends TestCase {
 		Monkey\Functions::expect( 'register_rest_field' )
 			->never();
 
-		/** @var Collection $fields */
 		( new Testee() )->register_fields( $fields );
 	}
 
@@ -97,17 +89,17 @@ class RegistryTest extends TestCase {
 	 */
 	public function test_register_fields() {
 
-		$field_foo = Mockery::mock( '\Inpsyde\WPRESTStarter\Common\Field\Field' )
+		$field_foo = Mockery::mock( 'Inpsyde\WPRESTStarter\Common\Field\Field' )
 			->shouldReceive( 'get_definition' )
 			->andReturn( [ 'field_foo_definition' ] )
 			->getMock();
 
-		$field_bar = Mockery::mock( '\Inpsyde\WPRESTStarter\Common\Field\Field' )
+		$field_bar = Mockery::mock( 'Inpsyde\WPRESTStarter\Common\Field\Field' )
 			->shouldReceive( 'get_definition' )
 			->andReturn( [ 'field_bar_definition' ] )
 			->getMock();
 
-		$fields = Mockery::mock( '\Inpsyde\WPRESTStarter\Common\Field\Collection' );
+		$fields = Mockery::mock( 'Inpsyde\WPRESTStarter\Common\Field\Collection' );
 		$fields->shouldReceive( 'getIterator' )
 			->andReturn( new ArrayIterator( [
 				'resource_foo' => compact( 'field_foo' ),
@@ -128,7 +120,6 @@ class RegistryTest extends TestCase {
 			->once()
 			->with( 'resource_bar', 'field_bar', [ 'field_bar_definition' ] );
 
-		/** @var Collection $fields */
 		( new Testee() )->register_fields( $fields );
 	}
 }

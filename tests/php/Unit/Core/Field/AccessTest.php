@@ -48,6 +48,6 @@ class AccessTest extends TestCase {
 
 		unset( $GLOBALS['wp_rest_additional_fields'][ $resource ] );
 
-		$this->assertSame( [ ], ( new Testee() )->get_fields( $resource ) );
+		$this->assertSame( [], ( new Testee() )->get_fields( $resource ) );
 	}
 }

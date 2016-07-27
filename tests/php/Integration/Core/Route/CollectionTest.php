@@ -35,8 +35,16 @@ class CollectionTest extends TestCase {
 
 		$route = new Route( $url, new Options() );
 
-		$this->assertSame( $route, iterator_to_array( $testee->add( $route )->getIterator() )[0] );
+		$testee->add( $route );
 
-		$this->assertSame( 0, count( iterator_to_array( $testee->delete( 0 )->getIterator() ) ) );
+		$routes = iterator_to_array( $testee->getIterator() );
+
+		$this->assertSame( $route, $routes[0] );
+
+		$testee->delete( 0 );
+
+		$routes = iterator_to_array( $testee->getIterator() );
+
+		$this->assertTrue( empty( $routes ) );
 	}
 }
