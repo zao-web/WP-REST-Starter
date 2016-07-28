@@ -158,9 +158,8 @@ add_action( 'rest_api_init', function() {
 <?php
 
 use Inpsyde\WPRESTStarter\Core\Field\Collection;
-use Inpsyde\WPRESTStarter\Core\Field\Definition;
-use Inpsyde\WPRESTStarter\Core\Field\Registry;
 use Inpsyde\WPRESTStarter\Core\Field\Field;
+use Inpsyde\WPRESTStarter\Core\Field\Registry;
 
 add_action( 'rest_api_init', function() {
 
@@ -172,18 +171,22 @@ add_action( 'rest_api_init', function() {
 	// TODO: Optional: Create a field $schema object (implement ~\Common\Schema).
 
 	// Register a read- and updatable field for some resource.
-	$fields->add( 'some-data-type', new Field(
-		'has_explicit_content',
-		Definition::from_arguments( $reader, $updater, $schema )
-	) );
+	$fields->add(
+		'some-data-type',
+		( new Field( 'has_explicit_content' ) )
+			->set_get_callback( $reader )
+			->set_update_callback( $updater )
+			->set_schema( $schema )
+	);
 
 	// TODO: Set up the $reader to READ the field value (implement ~\Common\Field\Reader).
 
 	// Register another read-only field for some resource.
-	$fields->add( 'some-data-type', new Field(
-		'is_long_read',
-		Definition::from_arguments( $reader )
-	) );
+	$fields->add(
+		'some-data-type',
+		( new Field( 'is_long_read' ) )
+			->set_get_callback( $reader )
+	);
 
 	// Register all fields.
 	( new Registry() )->register_fields( $fields );
