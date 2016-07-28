@@ -120,7 +120,7 @@ add_action( 'rest_api_init', function() {
 
 	$endpoint_base = 'some-data-type';
 
-	// TODO: Set up the $handler for the READ request (implement ~\Common\Endpoint\Handler).
+	// TODO: Set up the $handler for the READ request (implement ~\Common\Endpoint\RequestHandler).
 	// TODO: Optional: Set up according endpoint $args (implement ~\Common\Arguments).
 
 	// Register a route for the READ endpoint.
@@ -129,7 +129,7 @@ add_action( 'rest_api_init', function() {
 		Options::from_arguments( $handler, $args )
 	) );
 
-	// TODO: Set up the $handler for the CREATE request (implement ~\Common\Endpoint\Handler).
+	// TODO: Set up the $handler for the CREATE request (implement ~\Common\Endpoint\RequestHandler).
 	// TODO: Optional: Set up according endpoint $args (implement ~\Common\Arguments).
 
 	// Register a route for the CREATE endpoint.
@@ -273,11 +273,11 @@ class SomeEndpointArguments implements Arguments {
 ```php
 <?php
 
-use Inpsyde\WPRESTStarter\Common\Endpoint\Handler;
+use Inpsyde\WPRESTStarter\Common\Endpoint\RequestHandler;
 use Inpsyde\WPRESTStarter\Factory\Response;
 use Some\External\API;
 
-class SomeRequestHandler implements Handler {
+class SomeRequestHandler implements RequestHandler {
 
 	/**
 	 * @var API
@@ -303,13 +303,13 @@ class SomeRequestHandler implements Handler {
 	}
 
 	/**
-	 * Processes the given request object and returns the according response object.
+	 * Handles the given request object and returns the according response object.
 	 *
 	 * @param WP_REST_Request $request Request object.
 	 *
 	 * @return WP_REST_Response Response object.
 	 */
-	public function process( WP_REST_Request $request ) {
+	public function handle_request( WP_REST_Request $request ) {
 
 		$id = $request->get_param( 'id' );
 
