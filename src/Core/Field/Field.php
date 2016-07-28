@@ -32,6 +32,9 @@ class Field implements ReadableField, UpdatableField, SchemaAwareField {
 	/**
 	 * Constructor. Sets up the properties.
 	 *
+	 * @since 1.0.0
+	 * @since 1.1.0 Temporarily removed the `array` type hint from the `$definition` parameter.
+	 *
 	 * @param string          $name       Field name.
 	 * @param array|Arguments $definition Optional. Field definition. Defaults to empty array.
 	 */
