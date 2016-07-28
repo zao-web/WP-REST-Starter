@@ -71,7 +71,7 @@ class Options implements ExtensibleOptions, SchemaAwareOptions {
 		// TODO: With version 2.0.0, adapt both the doc and type hint of $handler (i.e., RequestHandler only).
 
 		// TODO: With version 2.0.0, remove the following block.
-		if ( ! $handler instanceof RequestHandler ) {
+		if ( $handler && ! $handler instanceof RequestHandler ) {
 			_doing_it_wrong(
 				__METHOD__,
 				"The request handler, passed as first argument, should be an instance of Inpsyde\\WPRESTStarter\\Common\\Endpoint\\RequestHandler.",
