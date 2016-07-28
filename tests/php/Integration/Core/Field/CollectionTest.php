@@ -3,7 +3,6 @@
 namespace Inpsyde\WPRESTStarter\Tests\Integration\Core\Field;
 
 use Inpsyde\WPRESTStarter\Core\Field\Collection as Testee;
-use Inpsyde\WPRESTStarter\Core\Field\Definition;
 use Inpsyde\WPRESTStarter\Core\Field\Field;
 use Inpsyde\WPRESTStarter\Tests\TestCase;
 
@@ -33,7 +32,7 @@ class CollectionTest extends TestCase {
 
 		$field_name = 'field_name';
 
-		$field = new Field( $field_name, Definition::from_arguments() );
+		$field = new Field( $field_name );
 
 		$resource = 'resource';
 
