@@ -28,6 +28,12 @@ class Definition implements Common\Arguments {
 	 */
 	public function __construct( array $definition = [] ) {
 
+		_deprecated_function(
+			__METHOD__,
+			'1.1.0',
+			'Inpsyde\WPRESTStarter\Core\Field\Field::__construct()'
+		);
+
 		$this->definition = $definition;
 	}
 
@@ -51,6 +57,12 @@ class Definition implements Common\Arguments {
 		array $definition = []
 	) {
 
+		_deprecated_function(
+			__METHOD__,
+			'1.1.0',
+			'Inpsyde\WPRESTStarter\Core\Field\Field::__construct() and the available setters'
+		);
+
 		return ( new self( $definition ) )
 			->set_get_callback( $reader )
 			->set_update_callback( $updater )
@@ -69,6 +81,12 @@ class Definition implements Common\Arguments {
 	 */
 	public function set_get_callback( Common\Field\Reader $reader = null ) {
 
+		_deprecated_function(
+			__METHOD__,
+			'1.1.0',
+			'Inpsyde\WPRESTStarter\Core\Field\Field::set_get_callback()'
+		);
+
 		$this->definition['get_callback'] = $reader ? [ $reader, 'get_value' ] : null;
 
 		return $this;
@@ -86,6 +104,12 @@ class Definition implements Common\Arguments {
 	 */
 	public function set_schema( Common\Schema $schema = null ) {
 
+		_deprecated_function(
+			__METHOD__,
+			'1.1.0',
+			'Inpsyde\WPRESTStarter\Core\Field\Field::set_schema()'
+		);
+
 		$this->definition['schema'] = $schema ? [ $schema, 'get_schema' ] : null;
 
 		return $this;
@@ -102,6 +126,12 @@ class Definition implements Common\Arguments {
 	 * @return $this
 	 */
 	public function set_update_callback( Common\Field\Updater $updater = null ) {
+
+		_deprecated_function(
+			__METHOD__,
+			'1.1.0',
+			'Inpsyde\WPRESTStarter\Core\Field\Field::set_update_callback()'
+		);
 
 		$this->definition['update_callback'] = $updater ? [ $updater, 'update_value' ] : null;
 

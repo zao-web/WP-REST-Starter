@@ -61,6 +61,12 @@ class Collection implements Common\Route\Collection {
 	 */
 	public function to_array() {
 
+		_deprecated_function(
+			__METHOD__,
+			'1.1.0',
+			'iterator_to_array( Inpsyde\WPRESTStarter\Core\Route\Collection::getIterator() )'
+		);
+
 		return $this->routes;
 	}
 

@@ -63,6 +63,12 @@ class Collection implements Common\Field\Collection {
 	 */
 	public function to_array() {
 
+		_deprecated_function(
+			__METHOD__,
+			'1.1.0',
+			'iterator_to_array( Inpsyde\WPRESTStarter\Core\Field\Collection::getIterator() )'
+		);
+
 		return $this->fields;
 	}
 
