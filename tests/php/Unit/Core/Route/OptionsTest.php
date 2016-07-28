@@ -2,7 +2,6 @@
 
 namespace Inpsyde\WPRESTStarter\Tests\Unit\Core\Route;
 
-use Inpsyde\WPRESTStarter\Common\Endpoint\Schema;
 use Inpsyde\WPRESTStarter\Core\Route\Options as Testee;
 use Inpsyde\WPRESTStarter\Tests\TestCase;
 use Mockery;
@@ -31,24 +30,6 @@ class OptionsTest extends TestCase {
 		$testee = new Testee();
 
 		$this->assertSame( $testee, $testee->add( [] ) );
-	}
-
-	/**
-	 * Tests the class instance is returned.
-	 *
-	 * Only test the "fluent" part of the method. The "functional" part is covered in the according integration test.
-	 *
-	 * @since  1.0.0
-	 *
-	 * @covers Inpsyde\WPRESTStarter\Core\Route\Options::add_from_arguments()
-	 *
-	 * @return void
-	 */
-	public function test_add_from_arguments_returns_this() {
-
-		$testee = new Testee();
-
-		$this->assertSame( $testee, $testee->add_from_arguments() );
 	}
 
 	/**

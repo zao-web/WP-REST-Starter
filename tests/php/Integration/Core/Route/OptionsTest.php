@@ -27,7 +27,7 @@ class OptionsTest extends TestCase {
 	 */
 	public function test_creating_from_arguments() {
 
-		$handler = Mockery::mock( 'Inpsyde\WPRESTStarter\Common\Endpoint\Handler' );
+		$handler = Mockery::mock( 'Inpsyde\WPRESTStarter\Common\Endpoint\RequestHandler' );
 
 		$args = Mockery::mock( 'Inpsyde\WPRESTStarter\Common\Arguments' );
 		$args->shouldReceive( 'to_array' )
@@ -44,7 +44,7 @@ class OptionsTest extends TestCase {
 
 		$expected = [
 			[
-				'callback' => [ $handler, 'process' ],
+				'callback' => [ $handler, 'handle_request' ],
 				'args'     => [],
 				'methods'  => $methods,
 				'key'      => 'value',
@@ -60,7 +60,6 @@ class OptionsTest extends TestCase {
 	 * @since  1.0.0
 	 *
 	 * @covers Inpsyde\WPRESTStarter\Core\Route\Options::__construct()
-	 * @covers Inpsyde\WPRESTStarter\Core\Route\Options::add_from_arguments()
 	 * @covers Inpsyde\WPRESTStarter\Core\Route\Options::from_arguments()
 	 *
 	 * @return void
