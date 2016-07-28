@@ -2,18 +2,25 @@
 
 namespace Inpsyde\WPRESTStarter\Core\Field;
 
-use Inpsyde\WPRESTStarter\Common;
+use Inpsyde\WPRESTStarter\Common\Arguments;
+use Inpsyde\WPRESTStarter\Common\Field\ReadableField;
+use Inpsyde\WPRESTStarter\Common\Field\Reader;
+use Inpsyde\WPRESTStarter\Common\Field\SchemaAwareField;
+use Inpsyde\WPRESTStarter\Common\Field\UpdatableField;
+use Inpsyde\WPRESTStarter\Common\Field\Updater;
+use Inpsyde\WPRESTStarter\Common\Schema;
 
 /**
- * Field implementation using the field definition data type.
+ * Implementation of a complete (i.e., readable, updatable and schema-aware) field.
  *
  * @package Inpsyde\WPRESTStarter\Core\Field
  * @since   1.0.0
+ * @since   1.1.0 Implement specific interfaces for readable, updatable and schema-aware fields.
  */
-class Field implements Common\Field\Field {
+class Field implements ReadableField, UpdatableField, SchemaAwareField {
 
 	/**
-	 * @var Common\Arguments
+	 * @var array
 	 */
 	private $definition;
 
@@ -25,14 +32,76 @@ class Field implements Common\Field\Field {
 	/**
 	 * Constructor. Sets up the properties.
 	 *
-	 * @param string     $name       Field name.
-	 * @param Common\Arguments $definition Field definition object.
+	 * @param string          $name       Field name.
+	 * @param array|Arguments $definition Optional. Field definition. Defaults to empty array.
 	 */
-	public function __construct( $name, Common\Arguments $definition ) {
+	public function __construct( $name, $definition = [] ) {
 
 		$this->name = (string) $name;
 
-		$this->definition = $definition;
+		// TODO: With version 2.0.0, remove the following block, and adapt both the doc and type hint of $definition.
+		if ( $definition instanceof Arguments ) {
+			_doing_it_wrong(
+				__METHOD__,
+				"The field definition, passed as second argument, should be an array.",
+				'1.1.0'
+			);
+
+			$this->definition = $definition->to_array();
+
+			return;
+		}
+
+		// TODO: With version 2.0.0, remove unnecessary cast.
+		$this->definition = (array) $definition;
+	}
+
+	/**
+	 * Sets the callback for reading the field value to the according callback on the given field reader object.
+	 *
+	 * @since 1.1.0
+	 *
+	 * @param Reader $reader Optional. Field reader object. Defaults to null.
+	 *
+	 * @return static Field object.
+	 */
+	public function set_get_callback( Reader $reader = null ) {
+
+		$this->definition['get_callback'] = $reader ? [ $reader, 'get_value' ] : null;
+
+		return $this;
+	}
+
+	/**
+	 * Sets the schema callback in the options to the according callback on the given schema object.
+	 *
+	 * @since 1.1.0
+	 *
+	 * @param Schema $schema Optional. Schema object. Defaults to null.
+	 *
+	 * @return static Field object.
+	 */
+	public function set_schema( Schema $schema = null ) {
+
+		$this->definition['schema'] = $schema ? [ $schema, 'get_schema' ] : null;
+
+		return $this;
+	}
+
+	/**
+	 * Sets the callback for updating the field value to the according callback on the given field updater object.
+	 *
+	 * @since 1.1.0
+	 *
+	 * @param Updater $updater Optional. Field updater object. Defaults to null.
+	 *
+	 * @return static Field object.
+	 */
+	public function set_update_callback( Updater $updater = null ) {
+
+		$this->definition['update_callback'] = $updater ? [ $updater, 'update_value' ] : null;
+
+		return $this;
 	}
 
 	/**
@@ -45,7 +114,7 @@ class Field implements Common\Field\Field {
 	 */
 	public function get_definition() {
 
-		return $this->definition->to_array();
+		return $this->definition;
 	}
 
 	/**
