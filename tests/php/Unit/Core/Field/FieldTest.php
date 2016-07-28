@@ -4,7 +4,6 @@ namespace Inpsyde\WPRESTStarter\Tests\Unit\Core\Field;
 
 use Inpsyde\WPRESTStarter\Core\Field\Field as Testee;
 use Inpsyde\WPRESTStarter\Tests\TestCase;
-use Mockery;
 
 /**
  * Test case for the field class.
