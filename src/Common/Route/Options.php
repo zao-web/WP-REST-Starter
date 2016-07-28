@@ -4,6 +4,12 @@ namespace Inpsyde\WPRESTStarter\Common\Route;
 
 use Inpsyde\WPRESTStarter\Common\Arguments;
 
+_deprecated_file(
+	'Inpsyde\WPRESTStarter\Common\Route\Options',
+	'1.1.0',
+	'Inpsyde\WPRESTStarter\Common\Arguments'
+);
+
 /**
  * Interface for all route options implementations.
  *
