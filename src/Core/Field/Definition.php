@@ -7,8 +7,9 @@ use Inpsyde\WPRESTStarter\Common;
 /**
  * Field definition data type.
  *
- * @package Inpsyde\WPRESTStarter\Core\Field
- * @since   1.0.0
+ * @deprecated 1.1.0 Deprecated in favor of {@see Field}.
+ * @package    Inpsyde\WPRESTStarter\Core\Field
+ * @since      1.0.0
  */
 class Definition implements Common\Arguments {
 
@@ -20,7 +21,8 @@ class Definition implements Common\Arguments {
 	/**
 	 * Constructor. Sets up the properties.
 	 *
-	 * @since 1.0.0
+	 * @deprecated 1.1.0 Deprecated in favor of {@see Field::__construct}.
+	 * @since      1.0.0
 	 *
 	 * @param array $definition Optional. Field definition. Defaults to empty array.
 	 */
@@ -32,7 +34,8 @@ class Definition implements Common\Arguments {
 	/**
 	 * Returns a new definition object, instantiated according to the given arguments.
 	 *
-	 * @since 1.0.0
+	 * @deprecated 1.1.0 Deprecated in favor of {@see Field::__construct} and the available setters.
+	 * @since      1.0.0
 	 *
 	 * @param Common\Field\Reader  $reader     Optional. Field reader object. Defaults to null.
 	 * @param Common\Field\Updater $updater    Optional. Field updater object. Defaults to null.
@@ -57,7 +60,8 @@ class Definition implements Common\Arguments {
 	/**
 	 * Sets the callback for reading the field value to the according callback on the given field reader object.
 	 *
-	 * @since 1.0.0
+	 * @deprecated 1.1.0 Deprecated in favor of {@see Field::set_get_callback}.
+	 * @since      1.0.0
 	 *
 	 * @param Common\Field\Reader $reader Optional. Field reader object. Defaults to null.
 	 *
@@ -73,7 +77,8 @@ class Definition implements Common\Arguments {
 	/**
 	 * Sets the schema callback in the options to the according callback on the given schema object.
 	 *
-	 * @since 1.0.0
+	 * @deprecated 1.1.0 Deprecated in favor of {@see Field::set_schema}.
+	 * @since      1.0.0
 	 *
 	 * @param Common\Schema $schema Optional. Schema object. Defaults to null.
 	 *
@@ -89,7 +94,8 @@ class Definition implements Common\Arguments {
 	/**
 	 * Sets the callback for updating the field value to the according callback on the given field updater object.
 	 *
-	 * @since 1.0.0
+	 * @deprecated 1.1.0 Deprecated in favor of {@see Field::set_update_callback}.
+	 * @since      1.0.0
 	 *
 	 * @param Common\Field\Updater $updater Optional. Field updater object. Defaults to null.
 	 *
