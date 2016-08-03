@@ -11,6 +11,7 @@ use Inpsyde\WPRESTStarter\Common;
  * @package Inpsyde\WPRESTStarter\Core\Field
  * @since   1.0.0
  * @since   1.1.0 Deprecated `to_array()` method.
+ * @since   2.0.0 Removed `to_array()` method.
  */
 class Collection implements Common\Field\Collection {
 
@@ -51,25 +52,6 @@ class Collection implements Common\Field\Collection {
 		unset( $this->fields[ $resource ][ $field_name ] );
 
 		return $this;
-	}
-
-	/**
-	 * Returns the fields in array form.
-	 *
-	 * @deprecated 1.1.0 If you really need this, use `iterator_to_array( $this->getIterator() );` instead.
-	 * @since      1.0.0
-	 *
-	 * @return Common\Field\Field[][] Fields array.
-	 */
-	public function to_array() {
-
-		_deprecated_function(
-			__METHOD__,
-			'1.1.0',
-			'iterator_to_array( Inpsyde\WPRESTStarter\Core\Field\Collection::getIterator() )'
-		);
-
-		return $this->fields;
 	}
 
 	/**
