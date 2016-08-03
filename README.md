@@ -4,7 +4,7 @@
 [![Status](https://img.shields.io/badge/status-active-brightgreen.svg)](https://github.com/inpsyde/WP-REST-Starter)
 [![Build](https://img.shields.io/travis/inpsyde/WP-REST-Starter.svg)](http://travis-ci.org/inpsyde/WP-REST-Starter)
 [![Downloads](https://img.shields.io/packagist/dt/inpsyde/wp-rest-starter.svg)](https://packagist.org/packages/inpsyde/wp-rest-starter)
-[![License](https://img.shields.io/packagist/v/inpsyde/wp-rest-starter.svg)](https://packagist.org/packages/inpsyde/wp-rest-starter)
+[![License](https://img.shields.io/packagist/l/inpsyde/wp-rest-starter.svg)](https://packagist.org/packages/inpsyde/wp-rest-starter)
 
 > Starter package for working with the WP REST API in an object-oriented fashion.
 
