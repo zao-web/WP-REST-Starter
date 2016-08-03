@@ -2,6 +2,7 @@
 
 ## 2.0.0
 
+* **[BREAKING]** **Finalize** all classes that implement at least one provided interface and that are not overcomplete.
 * **[BREAKING]** **Remove** deprecated `~\Common\Endpoint\Handler` and `~\Common\Route\Options` interfaces, and `~\Core\Field\Definition` implementation.
 * **[BREAKING]** **Remove** deprecated `to_array()` method from `~\Core\Field\Collection` and `~\Core\Route\Collection` implementations.
 * **Adapt** `~\Core\Field\Field` and `~\Core\Route\Options` implementations.
