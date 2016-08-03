@@ -21,6 +21,11 @@ final class Factory implements Common\Factory {
 	private $base;
 
 	/**
+	 * @var bool
+	 */
+	private $base_is_class;
+
+	/**
 	 * @var string
 	 */
 	private $default_class;
@@ -38,9 +43,9 @@ final class Factory implements Common\Factory {
 	 */
 	public function __construct( $base, $default_class = '' ) {
 
-		$base_is_class = class_exists( $base );
+		$this->base_is_class = class_exists( $base );
 
-		if ( ! ( $base_is_class || interface_exists( $base ) ) ) {
+		if ( ! ( $this->base_is_class || interface_exists( $base ) ) ) {
 			throw new InvalidArgumentException(
 				__METHOD__ . ' requires a valid fully qualified class or interface name as first argument.'
 			);
@@ -55,7 +60,7 @@ final class Factory implements Common\Factory {
 			return;
 		}
 
-		if ( $base_is_class ) {
+		if ( $this->base_is_class ) {
 			$this->default_class = (string) $base;
 
 			return;
@@ -113,18 +118,21 @@ final class Factory implements Common\Factory {
 	}
 
 	/**
-	 * Checks if the class with the given name is a subclass of the defined base.
+	 * Checks if the class with the given name is valid with respect to the defined base.
 	 *
 	 * @param string $class FQN of the class to be checked.
 	 *
 	 * @return void
 	 *
-	 * @throws InvalidClassException if the class with the given name is not a subclass of the defined base.
+	 * @throws InvalidClassException if the class with the given name is invalid with respect to the defined base.
 	 */
 	private function check_class( $class ) {
 
-		if ( ! is_subclass_of( $class, $this->base, true ) ) {
-			throw new InvalidClassException( "{$class} is not a subclass of {$this->base}." );
+		if (
+			! is_subclass_of( $class, $this->base, true )
+			&& ( ! $this->base_is_class || $class !== $this->base )
+		) {
+			throw new InvalidClassException( "{$class} is invalid with respect to the defined base {$this->base}." );
 		}
 	}
 }
