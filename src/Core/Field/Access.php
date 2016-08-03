@@ -9,8 +9,9 @@ use Inpsyde\WPRESTStarter\Common;
  *
  * @package Inpsyde\WPRESTStarter\Core\Field
  * @since   1.0.0
+ * @since   2.0.0 Made the class final.
  */
-class Access implements Common\Field\Access {
+final class Access implements Common\Field\Access {
 
 	/**
 	 * Returns the definition of all registered fields for the given resource.

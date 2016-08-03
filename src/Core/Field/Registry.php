@@ -9,8 +9,9 @@ use Inpsyde\WPRESTStarter\Common;
  *
  * @package Inpsyde\WPRESTStarter\Core\Field
  * @since   1.0.0
+ * @since   2.0.0 Made the class final.
  */
-class Registry implements Common\Field\Registry {
+final class Registry implements Common\Field\Registry {
 
 	/**
 	 * Registers the given fields.

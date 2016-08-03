@@ -15,8 +15,9 @@ use Inpsyde\WPRESTStarter\Common\Schema;
  * @package Inpsyde\WPRESTStarter\Core\Field
  * @since   1.0.0
  * @since   1.1.0 Implement specific interfaces for readable, updatable and schema-aware fields.
+ * @since   2.0.0 Made the class final.
  */
-class Field implements ReadableField, UpdatableField, SchemaAwareField {
+final class Field implements ReadableField, UpdatableField, SchemaAwareField {
 
 	/**
 	 * @var array

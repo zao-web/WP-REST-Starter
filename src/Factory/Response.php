@@ -12,8 +12,9 @@ use WP_REST_Response;
  *
  * @package Inpsyde\WPRESTStarter\Factory
  * @since   1.0.0
+ * @since   2.0.0 Made the class final.
  */
-class Response implements Common\Factory {
+final class Response implements Common\Factory {
 
 	/**
 	 * Fully qualified name of the base (class).

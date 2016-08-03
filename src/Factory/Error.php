@@ -12,8 +12,9 @@ use WP_Error;
  *
  * @package Inpsyde\WPRESTStarter\Factory
  * @since   1.0.0
+ * @since   2.0.0 Made the class final.
  */
-class Error implements Common\Factory {
+final class Error implements Common\Factory {
 
 	/**
 	 * Fully qualified name of the base (class).

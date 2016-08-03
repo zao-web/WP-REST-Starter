@@ -16,9 +16,10 @@ use WP_REST_Server;
  * @since   1.0.0
  * @since   1.1.0 Implement specific interfaces for extensible and schema-aware route options.
  * @since   1.1.0 Deprecated `add_from_arguments()` method.
+ * @since   2.0.0 Made the class final.
  * @since   2.0.0 Removed `add_from_arguments()` method.
  */
-class Options implements ExtensibleOptions, SchemaAwareOptions {
+final class Options implements ExtensibleOptions, SchemaAwareOptions {
 
 	/**
 	 * Default comma-separated HTTP verbs.

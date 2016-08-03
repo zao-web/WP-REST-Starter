@@ -9,8 +9,9 @@ use Inpsyde\WPRESTStarter\Common;
  *
  * @package Inpsyde\WPRESTStarter\Core\Route
  * @since   1.0.0
+ * @since   2.0.0 Made the class final.
  */
-class Registry implements Common\Route\Registry {
+final class Registry implements Common\Route\Registry {
 
 	/**
 	 * @var string
