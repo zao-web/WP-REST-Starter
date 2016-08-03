@@ -3,7 +3,6 @@
 namespace Inpsyde\WPRESTStarter\Core\Route;
 
 use Inpsyde\WPRESTStarter\Common\Arguments;
-use Inpsyde\WPRESTStarter\Common\Endpoint\Handler;
 use Inpsyde\WPRESTStarter\Common\Endpoint\RequestHandler;
 use Inpsyde\WPRESTStarter\Common\Endpoint\Schema;
 use Inpsyde\WPRESTStarter\Common\Route\ExtensibleOptions;
@@ -16,6 +15,8 @@ use WP_REST_Server;
  * @package Inpsyde\WPRESTStarter\Core\Route
  * @since   1.0.0
  * @since   1.1.0 Implement specific interfaces for extensible and schema-aware route options.
+ * @since   1.1.0 Deprecated `add_from_arguments()` method.
+ * @since   2.0.0 Removed `add_from_arguments()` method.
  */
 class Options implements ExtensibleOptions, SchemaAwareOptions {
 
@@ -53,35 +54,24 @@ class Options implements ExtensibleOptions, SchemaAwareOptions {
 	 * @since 1.0.0
 	 * @since 1.1.0 Make use of late static binding (i.e., return a new instance of `static` instead of `self`).
 	 * @since 1.1.0 Temporarily removed the `RequestHandler` type hint from the `$handler` parameter.
+	 * @since 2.0.0 Added the removed `RequestHandler` type hint for the `$handler` parameter.
 	 *
-	 * @param RequestHandler|Handler $handler Optional. Request handler object. Defaults to null.
-	 * @param Arguments              $args    Optional. Endpoint arguments object. Defaults to null.
-	 * @param string                 $methods Optional. Comma-separated HTTP verbs. Defaults to self::DEFAULT_METHODS.
-	 * @param array                  $options Optional. Additional options array. Defaults to empty array.
+	 * @param RequestHandler $handler Optional. Request handler object. Defaults to null.
+	 * @param Arguments      $args    Optional. Endpoint arguments object. Defaults to null.
+	 * @param string         $methods Optional. Comma-separated HTTP verbs. Defaults to self::DEFAULT_METHODS.
+	 * @param array          $options Optional. Additional options array. Defaults to empty array.
 	 *
 	 * @return static Route options object.
 	 */
 	public static function from_arguments(
-		$handler = null,
+		RequestHandler $handler = null,
 		Arguments $args = null,
 		$methods = self::DEFAULT_METHODS,
 		array $options = []
 	) {
 
-		// TODO: With version 2.0.0, adapt both the doc and type hint of $handler (i.e., RequestHandler only).
-
-		// TODO: With version 2.0.0, remove the following block.
-		if ( $handler && ! $handler instanceof RequestHandler ) {
-			_doing_it_wrong(
-				__METHOD__,
-				"The request handler, passed as first argument, should be an instance of Inpsyde\\WPRESTStarter\\Common\\Endpoint\\RequestHandler.",
-				'1.1.0'
-			);
-		}
-
 		if ( $handler ) {
-			// TODO: With version 2.0.0, just use `'handle_request'`.
-			$options['callback'] = [ $handler, $handler instanceof RequestHandler ? 'handle_request' : 'process' ];
+			$options['callback'] = [ $handler, 'handle_request' ];
 		}
 
 		if ( $args ) {
@@ -145,47 +135,6 @@ class Options implements ExtensibleOptions, SchemaAwareOptions {
 	public function add( $options ) {
 
 		$this->options[] = $options instanceof Arguments ? $options->to_array() : (array) $options;
-
-		return $this;
-	}
-
-	/**
-	 * Adds data to the options according to the given arguments.
-	 *
-	 * @deprecated 1.1.0 Deprecated in favor of {@see self::add()} and {@see self::from_arguments()}.
-	 * @since      1.0.0
-	 *
-	 * @param Handler   $handler Optional. Request handler object. Defaults to null.
-	 * @param Arguments $args    Optional. Endpoint arguments object. Defaults to null.
-	 * @param string    $methods Optional. Comma-separated HTTP verbs. Defaults to self::DEFAULT_METHODS.
-	 * @param array     $options Optional. Additional options array. Defaults to empty array.
-	 *
-	 * @return static Options object.
-	 */
-	public function add_from_arguments(
-		Handler $handler = null,
-		Arguments $args = null,
-		$methods = self::DEFAULT_METHODS,
-		array $options = []
-	) {
-
-		_deprecated_function(
-			__METHOD__,
-			'1.1.0',
-			'Inpsyde\WPRESTStarter\Core\Route\Options::add() and Inpsyde\WPRESTStarter\Core\Route\Options::from_arguments()'
-		);
-
-		if ( $handler ) {
-			$options['callback'] = [ $handler, 'process' ];
-		}
-
-		if ( $args ) {
-			$options['args'] = $args->to_array();
-		}
-
-		$options['methods'] = (string) $methods;
-
-		$this->options[] = $options;
 
 		return $this;
 	}
