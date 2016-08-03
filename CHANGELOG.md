@@ -1,18 +1,24 @@
 # Changelog
 
+## 2.0.0
+
+* **[BREAKING]** **Remove** deprecated `~\Common\Endpoint\Handler` and `~\Common\Route\Options` interfaces, and `~\Core\Field\Definition` implementation.
+* **[BREAKING]** **Remove** deprecated `to_array()` method from `~\Core\Field\Collection` and `~\Core\Route\Collection` implementations.
+* **Adapt** `~\Core\Field\Field` and `~\Core\Route\Options` implementations.
+
 ## 1.1.0
 
-- **Introduce** `Endpoint\RequestHandler` interface.
-- **Introduce** `Field\ReadableField`, `Field\UpdatableField` and `Field\SchemaAwareField` interfaces.
-- **Introduce** `Route\ExtensibleOptions` and `Route\SchemaAwareOptions` interfaces.
-- **Refactor** `Field\Collection` interface and implementation.
-- **Refactor** `Field\Field` implementation.
-- **Refactor** `Route\Collection` interface and implementation.
-- **Refactor** `Route\Options` implementation.
-- **Deprecate** `Endpoint\Handler` interface in favor of `Endpoint\RequestHandler`.
-- **Deprecate** `Field\Definition` implementation in favor of `Field\Field`.
-- **Deprecate** `Route\Options` interface in favor of `Arguments`.
+* **Introduce** `~\Common\Endpoint\RequestHandler` interface.
+* **Introduce** `~\Common\Field\ReadableField`, `~\Common\Field\UpdatableField` and `~\Common\Field\SchemaAwareField` interfaces.
+* **Introduce** `~\Common\Route\ExtensibleOptions` and `~\Common\Route\SchemaAwareOptions` interfaces.
+* **Refactor** `~\Common\Field\Collection` interface and `~\Core\Field\Collection` implementation.
+* **Refactor** `~\Core\Field\Field` implementation.
+* **Refactor** `~\Common\Route\Collection` interface and `~\Core\Route\Collection` implementation.
+* **Refactor** `~\Core\Route\Options` implementation.
+* **Deprecate** `~\Common\Endpoint\Handler` interface in favor of `~\Common\Endpoint\RequestHandler`.
+* **Deprecate** `~\Core\Field\Definition` implementation in favor of `~\Core\Field\Field`.
+* **Deprecate** `~\Common\Route\Options` interface in favor of `~\Common\Arguments`.
 
 ## 1.0.0
 
-- Initial release.
+* Initial release.
