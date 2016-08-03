@@ -1,32 +1,51 @@
 # WP REST Starter
 
-[![Latest Stable Version](https://poser.pugx.org/inpsyde/wp-rest-starter/version)](https://packagist.org/packages/inpsyde/wp-rest-starter)
-[![Project Status](http://opensource.box.com/badges/active.svg)](http://opensource.box.com/badges)
-[![Build Status](https://travis-ci.org/inpsyde/WP-REST-Starter.svg?branch=master)](http://travis-ci.org/inpsyde/WP-REST-Starter)
-[![Total Downloads](https://poser.pugx.org/inpsyde/wp-rest-starter/downloads)](https://packagist.org/packages/inpsyde/wp-rest-starter)
-[![License](https://poser.pugx.org/inpsyde/wp-rest-starter/license)](https://packagist.org/packages/inpsyde/wp-rest-starter)
+[![Version](https://img.shields.io/packagist/v/inpsyde/wp-rest-starter.svg)](https://packagist.org/packages/inpsyde/wp-rest-starter)
+[![Status](https://img.shields.io/badge/status-active-brightgreen.svg)](https://github.com/inpsyde/WP-REST-Starter)
+[![Build](https://img.shields.io/travis/inpsyde/WP-REST-Starter.svg)](http://travis-ci.org/inpsyde/WP-REST-Starter)
+[![Downloads](https://img.shields.io/packagist/dt/inpsyde/wp-rest-starter.svg)](https://packagist.org/packages/inpsyde/wp-rest-starter)
+[![License](https://img.shields.io/packagist/v/inpsyde/wp-rest-starter.svg)](https://packagist.org/packages/inpsyde/wp-rest-starter)
 
-> Starter package for working with the WordPress REST API in an object-oriented fashion.
+> Starter package for working with the WP REST API in an object-oriented fashion.
 
 ![WP REST Starter](resources/images/banner.png)
 
 ## Introduction
 
-Since the infrastructure of the WordPress REST API got merged into Core and more and more will be integrated, it's obvious for others to jump on the bandwagon. This package provides you with virtually anything you need to start _feeling RESTful_.
+Since the infrastructure of the WordPress REST API got merged into Core and more and more will be integrated, it's obvious for others to jump on the bandwagon.
+This package provides you with virtually anything you need to start _feeling RESTful_.
 
-WP REST Starter consists of several interfaces for both data types and _business logic_, and it comes with straightforward implementations suitable for the common needs. All you have to do is configure your REST routes and data structures, and implement the according request handlers.
+WP REST Starter consists of several interfaces for both data types and _business logic_, and it comes with straightforward implementations suitable for the common needs.
+All you have to do is configure your REST routes and data structures, and implement the according request handlers.
+
+## Table of Contents
+
+* [Installation](#installation)
+  * [Requirements](#requirements)
+* [Usage](#usage)
+  * [Actions](#actions)
+    * [`wp_rest_starter.register_fields`](#wp_rest_starterregister_fields)
+    * [`wp_rest_starter.register_routes`](#wp_rest_starterregister_routes)
+  * [Registering a Custom Route](#registering-a-custom-route)
+  * [Adding Custom Fields to the Response of Existing Endpoints](#adding-custom-fields-to-the-response-of-existing-endpoints)
+  * [Example Endpoint Schema Implementation](#example-endpoint-schema-implementation)
+  * [Example Endpoint Arguments Implementation](#example-endpoint-arguments-implementation)
+  * [Example Request Handler Implementation](#example-request-handler-implementation)
+  * [Example Field Schema Implementation](#example-field-schema-implementation)
+  * [Example Field Reader Implementation](#example-field-reader-implementation)
+  * [Example Field Updater Implementation](#example-field-updater-implementation)
 
 ## Installation
 
 Install with Composer:
 
-```
+```sh
 $ composer require inpsyde/wp-rest-starter
 ```
 
 Run the tests:
 
-```
+```sh
 $ vendor/bin/phpunit
 ```
 
@@ -34,24 +53,26 @@ $ vendor/bin/phpunit
 
 This package requires PHP 5.4 or higher.
 
-Adding custom fields to existing resources requires the [WP REST API](https://wordpress.org/plugins/rest-api/) plugin. If all you want to do is defining custom REST routes, you're already good to go with WordPress 4.4 or higher. 
+Adding custom fields to existing resources requires the [WP REST API](https://wordpress.org/plugins/rest-api/) plugin.
+If all you want to do is define custom REST routes, you're already good to go with WordPress 4.4 or higher. 
 
 ## Usage
 
-The following sections will help you get started with the WordPress REST API in an object-oriented fashion.  
+The following sections will help you get started with the WordPress REST API in an object-oriented fashion.
 If you're new to working with the WordPress REST API in general, please refer to [the official WP REST API documentation](http://v2.wp-api.org/).
 
 ### Actions
 
-In order to inform about certain events, some of the shipped classes provide you with custom actions. For each of these, a short description as well as a code example on how to _take action_ is given below.
+In order to inform about certain events, some of the shipped classes provide you with custom actions.
+For each of these, a short description as well as a code example on how to _take action_ is given below.
 
 #### `wp_rest_starter.register_fields`
 
-When using the default field registry class, `\Inpsyde\WPRESTStarter\Core\Field\Registry`, this action fires right before the fields are registered.
+When using the default field registry class, `Inpsyde\WPRESTStarter\Core\Field\Registry`, this action fires right before the fields are registered.
 
 **Arguments:**
 
-- `$fields` [`\Inpsyde\WPRESTStarter\Common\Field\Collection`](src/Common/Field/Collection.php): Field collection object.
+- `$fields` [`Inpsyde\WPRESTStarter\Common\Field\Collection`](src/Common/Field/Collection.php): Field collection object.
 
 **Usage Example:**
 
@@ -69,11 +90,11 @@ add_action( 'wp_rest_starter.register_routes', function ( Collection $fields ) {
 
 #### `wp_rest_starter.register_routes`
 
-When using the default route registry class, `\Inpsyde\WPRESTStarter\Core\Route\Registry`, this action fires right before the routes are registered.
+When using the default route registry class, `Inpsyde\WPRESTStarter\Core\Route\Registry`, this action fires right before the routes are registered.
 
 **Arguments:**
 
-- `$routes` [`\Inpsyde\WPRESTStarter\Common\Route\Collection`](src/Common/Route/Collection.php): Route collection object.
+- `$routes` [`Inpsyde\WPRESTStarter\Common\Route\Collection`](src/Common/Route/Collection.php): Route collection object.
 - `$namespace` `string`: Namespace.
 
 **Usage Example:**
