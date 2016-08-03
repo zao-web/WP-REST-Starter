@@ -1,13 +1,15 @@
 {
   "name": "inpsyde/wp-rest-starter",
-  "description": "Starter package for working with the WordPress REST API in an object-oriented fashion.",
+  "description": "Starter package for working with the WP REST API in an object-oriented fashion.",
   "type": "library",
   "keywords": [
     "api",
     "endpoint",
     "oop",
     "rest",
-    "starter"
+    "starter",
+    "wordpress",
+    "wp"
   ],
   "license": "MIT",
   "authors": [
@@ -20,18 +22,19 @@
     {
       "name": "Thorsten Frommen",
       "email": "t.frommen@inpsyde.com",
+      "homepage": "https://twitter.com/thorstenfrommen",
       "role": "Developer"
     }
   ],
   "support": {
-    "issues": "https://github.com/inpsyde/wp-rest-starter/issues",
-    "source": "https://github.com/inpsyde/wp-rest-starter"
+    "issues": "https://github.com/inpsyde/WP-REST-Starter/issues",
+    "source": "https://github.com/inpsyde/WP-REST-Starter"
   },
   "require": {
     "php": ">=5.4.0"
   },
   "require-dev": {
-    "brain/monkey": "~1.0",
+    "brain/monkey": "^1.4.0",
     "mockery/mockery": "0.9.*",
     "phpunit/phpunit": "~4.8|~5.1"
   },
