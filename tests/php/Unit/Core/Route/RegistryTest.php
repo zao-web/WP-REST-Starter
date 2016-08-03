@@ -53,19 +53,17 @@ class RegistryTest extends TestCase {
 
 		$namespace = 'some-namespace-here';
 
-		$route_foo = Mockery::mock( 'Inpsyde\WPRESTStarter\Common\Route\Route' )
-			->shouldReceive( 'get_url' )
-			->andReturn( 'route_foo_url' )
-			->shouldReceive( 'get_options' )
-			->andReturn( [ 'route_foo_options' ] )
-			->getMock();
+		$route_foo = Mockery::mock( 'Inpsyde\WPRESTStarter\Common\Route\Route' );
+		$route_foo->shouldReceive( 'get_url' )
+			->andReturn( 'route_foo_url' );
+		$route_foo->shouldReceive( 'get_options' )
+			->andReturn( [ 'route_foo_options' ] );
 
-		$route_bar = Mockery::mock( 'Inpsyde\WPRESTStarter\Common\Route\Route' )
-			->shouldReceive( 'get_url' )
-			->andReturn( 'route_bar_url' )
-			->shouldReceive( 'get_options' )
-			->andReturn( [ 'route_bar_options' ] )
-			->getMock();
+		$route_bar = Mockery::mock( 'Inpsyde\WPRESTStarter\Common\Route\Route' );
+		$route_bar->shouldReceive( 'get_url' )
+			->andReturn( 'route_bar_url' );
+		$route_bar->shouldReceive( 'get_options' )
+			->andReturn( [ 'route_bar_options' ] );
 
 		$routes = Mockery::mock( 'Inpsyde\WPRESTStarter\Common\Route\Collection' );
 		$routes->shouldReceive( 'getIterator' )
