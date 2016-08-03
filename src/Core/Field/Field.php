@@ -2,7 +2,6 @@
 
 namespace Inpsyde\WPRESTStarter\Core\Field;
 
-use Inpsyde\WPRESTStarter\Common\Arguments;
 use Inpsyde\WPRESTStarter\Common\Field\ReadableField;
 use Inpsyde\WPRESTStarter\Common\Field\Reader;
 use Inpsyde\WPRESTStarter\Common\Field\SchemaAwareField;
@@ -34,29 +33,16 @@ class Field implements ReadableField, UpdatableField, SchemaAwareField {
 	 *
 	 * @since 1.0.0
 	 * @since 1.1.0 Temporarily removed the `array` type hint from the `$definition` parameter.
+	 * @since 2.0.0 Added the removed `array` type hint for the `$definition` parameter.
 	 *
-	 * @param string          $name       Field name.
-	 * @param array|Arguments $definition Optional. Field definition. Defaults to empty array.
+	 * @param string $name       Field name.
+	 * @param array  $definition Optional. Field definition. Defaults to empty array.
 	 */
-	public function __construct( $name, $definition = [] ) {
+	public function __construct( $name, array $definition = [] ) {
 
 		$this->name = (string) $name;
 
-		// TODO: With version 2.0.0, remove the following block, and adapt both the doc and type hint of $definition.
-		if ( $definition instanceof Arguments ) {
-			_doing_it_wrong(
-				__METHOD__,
-				"The field definition, passed as second argument, should be an array.",
-				'1.1.0'
-			);
-
-			$this->definition = $definition->to_array();
-
-			return;
-		}
-
-		// TODO: With version 2.0.0, remove unnecessary cast.
-		$this->definition = (array) $definition;
+		$this->definition = $definition;
 	}
 
 	/**
