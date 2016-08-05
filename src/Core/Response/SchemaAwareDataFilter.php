@@ -47,23 +47,23 @@ final class SchemaAwareDataFilter implements DataFilter {
 				continue;
 			}
 
-			$properties = $this->properties[ $key ];
-			if ( empty( $properties['context'] ) ) {
+			$property = $this->properties[ $key ];
+			if ( empty( $property['context'] ) ) {
 				continue;
 			}
 
-			if ( ! in_array( $context, $properties['context'] ) ) {
+			if ( ! in_array( $context, (array) $property['context'] ) ) {
 				unset( $data[ $key ] );
 
 				continue;
 			}
 
-			if ( empty( $properties['properties'] ) || 'object' !== $properties['type'] ) {
+			if ( empty( $property['properties'] ) || empty( $property['type'] ) || 'object' !== $property['type'] ) {
 				continue;
 			}
 
-			foreach ( $properties['properties'] as $name => $details ) {
-				if ( empty( $details['context'] ) || in_array( $context, $details['context'] ) ) {
+			foreach ( $property['properties'] as $name => $details ) {
+				if ( empty( $details['context'] ) || in_array( $context, (array) $details['context'] ) ) {
 					continue;
 				}
 
