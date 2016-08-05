@@ -8,7 +8,7 @@ use Inpsyde\WPRESTStarter\Tests\TestCase;
 use Mockery;
 
 /**
- * Test case for the link-awre response data access class.
+ * Test case for the link-aware response data access class.
  *
  * @package Inpsyde\WPRESTStarter\Tests\Unit\Core\Response
  * @since   2.0.0
