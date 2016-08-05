@@ -1,26 +1,26 @@
 <?php # -*- coding: utf-8 -*-
 
-namespace Inpsyde\WPRESTStarter\Tests\Unit\Core;
+namespace Inpsyde\WPRESTStarter\Tests\Unit\Core\Response;
 
 use Brain\Monkey;
-use Inpsyde\WPRESTStarter\Core\LinkAwareResponseDataAccess as Testee;
+use Inpsyde\WPRESTStarter\Core\Response\LinkAwareDataAccess as Testee;
 use Inpsyde\WPRESTStarter\Tests\TestCase;
 use Mockery;
 
 /**
  * Test case for the link-awre response data access class.
  *
- * @package Inpsyde\WPRESTStarter\Tests\Unit\Core
+ * @package Inpsyde\WPRESTStarter\Tests\Unit\Core\Response
  * @since   2.0.0
  */
-class LinkAwareResponseDataAccessTest extends TestCase {
+class LinkAwareDataAccessTest extends TestCase {
 
 	/**
 	 * Tests getting the response data in array form without any links due the REST server being unaware of links.
 	 *
 	 * @since  2.0.0
 	 *
-	 * @covers Inpsyde\WPRESTStarter\Core\LinkAwareResponseDataAccess::get_data
+	 * @covers Inpsyde\WPRESTStarter\Core\Response\LinkAwareDataAccess::get_data
 	 *
 	 * @return void
 	 */
@@ -45,7 +45,7 @@ class LinkAwareResponseDataAccessTest extends TestCase {
 	 *
 	 * @since  2.0.0
 	 *
-	 * @covers Inpsyde\WPRESTStarter\Core\LinkAwareResponseDataAccess::get_data
+	 * @covers Inpsyde\WPRESTStarter\Core\Response\LinkAwareDataAccess::get_data
 	 *
 	 * @return void
 	 */
@@ -59,7 +59,7 @@ class LinkAwareResponseDataAccessTest extends TestCase {
 
 		$links = [ 'some', 'links', 'here' ];
 
-		$server_class = 'WP_REST_Server_Pre_4_5';
+		$server_class = 'WP_REST_Server_Post_4_5';
 		Monkey\Functions::when( 'rest_get_server' )
 			->justReturn( new $server_class( $links ) );
 
@@ -76,7 +76,7 @@ class LinkAwareResponseDataAccessTest extends TestCase {
 	 *
 	 * @since  2.0.0
 	 *
-	 * @covers Inpsyde\WPRESTStarter\Core\LinkAwareResponseDataAccess::get_data
+	 * @covers Inpsyde\WPRESTStarter\Core\Response\LinkAwareDataAccess::get_data
 	 *
 	 * @return void
 	 */

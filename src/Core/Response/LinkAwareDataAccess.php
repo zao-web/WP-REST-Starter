@@ -1,18 +1,18 @@
 <?php # -*- coding: utf-8 -*-
 
-namespace Inpsyde\WPRESTStarter\Core;
+namespace Inpsyde\WPRESTStarter\Core\Response;
 
-use Inpsyde\WPRESTStarter\Common\ResponseDataAccess;
+use Inpsyde\WPRESTStarter\Common\Response\DataAccess;
 
 use WP_REST_Response;
 
 /**
  * Response data access implementation aware of links.
  *
- * @package Inpsyde\WPRESTStarter\Core
+ * @package Inpsyde\WPRESTStarter\Core\Response
  * @since   2.0.0
  */
-final class LinkAwareResponseDataAccess implements ResponseDataAccess {
+final class LinkAwareDataAccess implements DataAccess {
 
 	/**
 	 * Returns an array holding the data as well as the defined links of the given response object.

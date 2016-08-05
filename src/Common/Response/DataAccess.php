@@ -1,16 +1,16 @@
 <?php # -*- coding: utf-8 -*-
 
-namespace Inpsyde\WPRESTStarter\Common;
+namespace Inpsyde\WPRESTStarter\Common\Response;
 
 use WP_REST_Response;
 
 /**
  * Interface for all response data access implementations.
  *
- * @package Inpsyde\WPRESTStarter\Common
+ * @package Inpsyde\WPRESTStarter\Common\Response
  * @since   2.0.0
  */
-interface ResponseDataAccess {
+interface DataAccess {
 
 	/**
 	 * Returns an array holding the data as well as the defined links of the given response object.
