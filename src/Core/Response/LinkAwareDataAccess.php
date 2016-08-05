@@ -3,7 +3,6 @@
 namespace Inpsyde\WPRESTStarter\Core\Response;
 
 use Inpsyde\WPRESTStarter\Common\Response\DataAccess;
-
 use WP_REST_Response;
 
 /**
