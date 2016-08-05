@@ -52,18 +52,22 @@ final class SchemaAwareDataFilter implements DataFilter {
 				continue;
 			}
 
-			if ( ! in_array( $context, (array) $property['context'] ) ) {
+			if ( ! in_array( $context, (array) $property['context'], true ) ) {
 				unset( $data[ $key ] );
 
 				continue;
 			}
 
-			if ( empty( $property['properties'] ) || empty( $property['type'] ) || 'object' !== $property['type'] ) {
+			if ( empty( $property['properties'] ) ) {
+				continue;
+			}
+
+			if ( empty( $property['type'] ) || 'object' !== $property['type'] ) {
 				continue;
 			}
 
 			foreach ( $property['properties'] as $name => $details ) {
-				if ( empty( $details['context'] ) || in_array( $context, (array) $details['context'] ) ) {
+				if ( empty( $details['context'] ) || in_array( $context, (array) $details['context'], true ) ) {
 					continue;
 				}
 
