@@ -6,7 +6,8 @@
 * **[BREAKING]** **Remove** deprecated `~\Common\Endpoint\Handler` and `~\Common\Route\Options` interfaces, and `~\Core\Field\Definition` implementation.
 * **[BREAKING]** **Remove** deprecated `to_array()` method from `~\Core\Field\Collection` and `~\Core\Route\Collection` implementations.
 * **Adapt** `~\Core\Field\Field` and `~\Core\Route\Options` implementations.
-* **Introduce** `~\Common\ResponseDataAccess` interface and `~\Core\LinkAwareResponseDataAccess` implementation.
+* **Introduce** `~\Common\Response\DataAccess` interface and `~\Core\Response\LinkAwareDataAccess` implementation.
+* **Introduce** `~\Common\Response\DataFilter` interface and `~\Core\Response\SchemaAwareDataFilter` implementation.
 
 ## 1.1.0
 
