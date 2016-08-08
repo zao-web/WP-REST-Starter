@@ -2,6 +2,8 @@
 
 namespace Inpsyde\WPRESTStarter\Common\Field;
 
+use WP_REST_Request;
+
 /**
  * Interface for all field updater implementations.
  *
@@ -14,12 +16,21 @@ interface Updater {
 	 * Updates the value of the field with the given name of the given object to the given value.
 	 *
 	 * @since 1.0.0
+	 * @since 2.0.0 Added optional $request and $object_type parameters.
 	 *
-	 * @param mixed  $value      New field value.
-	 * @param object $object     Object from the response.
-	 * @param string $field_name Field name.
+	 * @param mixed           $value       New field value.
+	 * @param object          $object      Object data.
+	 * @param string          $field_name  Field name.
+	 * @param WP_REST_Request $request     Optional. Request object. Defaults to null.
+	 * @param string          $object_type Optional. Object type. Defaults to empty string.
 	 *
 	 * @return bool Whether or not the field was updated successfully.
 	 */
-	public function update_value( $value, $object, $field_name );
+	public function update_value(
+		$value,
+		$object,
+		$field_name,
+		WP_REST_Request $request = null,
+		$object_type = ''
+	);
 }
