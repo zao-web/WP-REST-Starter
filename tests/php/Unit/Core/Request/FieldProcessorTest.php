@@ -204,14 +204,23 @@ class FieldProcessorTest extends TestCase {
 
 		$request = Mockery::mock( 'WP_REST_Request', 'ArrayAccess' );
 		$request->shouldReceive( 'offsetExists' )
+			->with( Mockery::anyOf(
+				'no_callback',
+				'invalid_callback',
+				$valid_field_1,
+				$valid_field_2
+			) )
 			->andReturn( true );
+		$request->shouldReceive( 'offsetExists' )
+			->andReturn( false );
 		$request->shouldReceive( 'offsetGet' )
+			->with( Mockery::anyOf(
+				'no_callback',
+				'invalid_callback',
+				$valid_field_1,
+				$valid_field_2
+			) )
 			->andReturn( $field_value );
-
-		$request->no_callback      = true;
-		$request->invalid_callback = true;
-		$request->$valid_field_1   = true;
-		$request->$valid_field_2   = true;
 
 		$object_type = 'some_type_here';
 
