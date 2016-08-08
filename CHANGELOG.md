@@ -7,6 +7,7 @@
 * **[BREAKING]** **Remove** deprecated `to_array()` method from `~\Core\Field\Collection` and `~\Core\Route\Collection` implementations.
 * **[BREAKING]** **Add** `get_title()` method to `~\Common\Endpoint\Schema` interface.
 * **Adapt** `~\Core\Field\Field` and `~\Core\Route\Options` implementations.
+* **Introduce** `~\Common\Endpoint\FieldProcessor` interface and `~\Core\Endpoint\FieldProcessor` implementation.
 * **Introduce** `~\Common\Request\FieldProcessor` interface and `~\Core\Request\FieldProcessor` implementation.
 * **Introduce** `~\Common\Response\DataAccess` interface and `~\Core\Response\LinkAwareDataAccess` implementation.
 * **Introduce** `~\Common\Response\DataFilter` interface and `~\Core\Response\SchemaAwareDataFilter` implementation.
