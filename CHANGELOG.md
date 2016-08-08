@@ -18,7 +18,6 @@
 * Introduce (and integrate) interface and reference implementation (including tests) for:
   * [`WP_REST_Controller::add_additional_fields_schema()`](https://github.com/WP-API/WP-API/blob/c661101fd4f8889a68c34105e09a39e00c2e122f/lib/endpoints/class-wp-rest-controller.php#L352-L380).
 * Write tests for:
-  * `~\Core\Request\FieldProcessor`;
   * `~\Core\Factory`;
   * `~\Core\Factory\Error`;
   * `~\Core\Factory\PermissionCallback`;
