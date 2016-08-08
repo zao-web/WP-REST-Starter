@@ -20,7 +20,6 @@ class OptionsTest extends TestCase {
 	 * @since  1.0.0
 	 *
 	 * @covers Inpsyde\WPRESTStarter\Core\Route\Options::__construct()
-	 * @covers Inpsyde\WPRESTStarter\Core\Route\Options::add_from_arguments()
 	 * @covers Inpsyde\WPRESTStarter\Core\Route\Options::from_arguments()
 	 *
 	 * @return void

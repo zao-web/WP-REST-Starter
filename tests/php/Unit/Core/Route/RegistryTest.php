@@ -21,6 +21,7 @@ class RegistryTest extends TestCase {
 	 *
 	 * @since  1.0.0
 	 *
+	 * @covers Inpsyde\WPRESTStarter\Core\Route\Registry::__construct()
 	 * @covers Inpsyde\WPRESTStarter\Core\Route\Registry::register_routes()
 	 *
 	 * @return void
@@ -45,6 +46,7 @@ class RegistryTest extends TestCase {
 	 *
 	 * @since  1.0.0
 	 *
+	 * @covers Inpsyde\WPRESTStarter\Core\Route\Registry::__construct()
 	 * @covers Inpsyde\WPRESTStarter\Core\Route\Registry::register_routes()
 	 *
 	 * @return void

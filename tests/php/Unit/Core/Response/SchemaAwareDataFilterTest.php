@@ -19,6 +19,7 @@ class SchemaAwareDataFilterTest extends TestCase {
 	 *
 	 * @since  2.0.0
 	 *
+	 * @covers Inpsyde\WPRESTStarter\Core\Response\SchemaAwareDataFilter::__construct
 	 * @covers Inpsyde\WPRESTStarter\Core\Response\SchemaAwareDataFilter::filter_data
 	 *
 	 * @return void

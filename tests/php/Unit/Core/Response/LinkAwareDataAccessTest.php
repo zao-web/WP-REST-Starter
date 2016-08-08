@@ -21,6 +21,7 @@ class LinkAwareDataAccessTest extends TestCase {
 	 * @since  2.0.0
 	 *
 	 * @covers Inpsyde\WPRESTStarter\Core\Response\LinkAwareDataAccess::get_data
+	 * @covers Inpsyde\WPRESTStarter\Core\Response\LinkAwareDataAccess::get_links
 	 *
 	 * @return void
 	 */
@@ -46,6 +47,7 @@ class LinkAwareDataAccessTest extends TestCase {
 	 * @since  2.0.0
 	 *
 	 * @covers Inpsyde\WPRESTStarter\Core\Response\LinkAwareDataAccess::get_data
+	 * @covers Inpsyde\WPRESTStarter\Core\Response\LinkAwareDataAccess::get_links
 	 *
 	 * @return void
 	 */
@@ -77,6 +79,7 @@ class LinkAwareDataAccessTest extends TestCase {
 	 * @since  2.0.0
 	 *
 	 * @covers Inpsyde\WPRESTStarter\Core\Response\LinkAwareDataAccess::get_data
+	 * @covers Inpsyde\WPRESTStarter\Core\Response\LinkAwareDataAccess::get_links
 	 *
 	 * @return void
 	 */
