@@ -5,17 +5,24 @@
 * **[BREAKING]** **Finalize** all classes that implement at least one provided interface and that are not overcomplete.
 * **[BREAKING]** **Remove** deprecated `~\Common\Endpoint\Handler` and `~\Common\Route\Options` interfaces, and `~\Core\Field\Definition` implementation.
 * **[BREAKING]** **Remove** deprecated `to_array()` method from `~\Core\Field\Collection` and `~\Core\Route\Collection` implementations.
+* **[BREAKING]** **Add** `get_title()` method to `~\Common\Endpoint\Schema` interface.
 * **Adapt** `~\Core\Field\Field` and `~\Core\Route\Options` implementations.
+* **Introduce** `~\Common\Request\FieldProcessor` interface and `~\Core\Request\FieldProcessor` implementation.
 * **Introduce** `~\Common\Response\DataAccess` interface and `~\Core\Response\LinkAwareDataAccess` implementation.
 * **Introduce** `~\Common\Response\DataFilter` interface and `~\Core\Response\SchemaAwareDataFilter` implementation.
+* **Add** optional `$object_type` parameter to `~\Common\Field\Reader` interface.
+* **Add** optional `$request` and `$object_type` parameters to `~\Common\Field\Updater` interface.
 
 ### TODO
 
-Introduce (and integrate) interfaces and reference implementations for:
-
-* [`WP_REST_Controller::add_additional_fields_to_object()`](https://github.com/WP-API/WP-API/blob/c661101fd4f8889a68c34105e09a39e00c2e122f/lib/endpoints/class-wp-rest-controller.php#L304-L325).
-* [`WP_REST_Controller::update_additional_fields_for_object()`](https://github.com/WP-API/WP-API/blob/c661101fd4f8889a68c34105e09a39e00c2e122f/lib/endpoints/class-wp-rest-controller.php#L327-L350).
-* [`WP_REST_Controller::add_additional_fields_schema()`](https://github.com/WP-API/WP-API/blob/c661101fd4f8889a68c34105e09a39e00c2e122f/lib/endpoints/class-wp-rest-controller.php#L352-L380).
+* Introduce (and integrate) interface and reference implementation (including tests) for:
+  * [`WP_REST_Controller::add_additional_fields_schema()`](https://github.com/WP-API/WP-API/blob/c661101fd4f8889a68c34105e09a39e00c2e122f/lib/endpoints/class-wp-rest-controller.php#L352-L380).
+* Write tests for:
+  * `~\Core\Request\FieldProcessor`;
+  * `~\Core\Factory`;
+  * `~\Core\Factory\Error`;
+  * `~\Core\Factory\PermissionCallback`;
+  * `~\Core\Factory\Response`.
 
 ## 1.1.0
 
