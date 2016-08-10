@@ -26,7 +26,8 @@ All you have to do is configure your REST routes and data structures, and implem
   * [Actions](#actions)
     * [`wp_rest_starter.register_fields`](#wp_rest_starterregister_fields)
     * [`wp_rest_starter.register_routes`](#wp_rest_starterregister_routes)
-  * [Registering a Custom Route](#registering-a-custom-route)
+  * [Registering a Simple Custom Route](#registering-a-simple-custom-route)
+  * [Registering a Complex Custom Route](#registering-a-complex-custom-route)
   * [Adding Custom Fields to the Response of Existing Endpoints](#adding-custom-fields-to-the-response-of-existing-endpoints)
   * [Example Endpoint Schema Implementation](#example-endpoint-schema-implementation)
   * [Example Endpoint Arguments Implementation](#example-endpoint-arguments-implementation)
@@ -34,6 +35,7 @@ All you have to do is configure your REST routes and data structures, and implem
   * [Example Field Schema Implementation](#example-field-schema-implementation)
   * [Example Field Reader Implementation](#example-field-reader-implementation)
   * [Example Field Updater Implementation](#example-field-updater-implementation)
+  * [Example Formatter Implementation](#example-formatter-implementation)
 
 ## Installation
 
@@ -120,7 +122,9 @@ add_action( 'wp_rest_starter.register_routes', function ( Collection $routes, $n
 }, 10, 2 );
 ```
 
-### Registering a Custom Route
+### Registering a Simple Custom Route
+
+The very simple example code below illustrates the registration of a custom route with endpoints for reading and creating the individual resource(s).
 
 ```php
 <?php
@@ -129,7 +133,7 @@ use Inpsyde\WPRESTStarter\Core\Route\Collection;
 use Inpsyde\WPRESTStarter\Core\Route\Options;
 use Inpsyde\WPRESTStarter\Core\Route\Registry;
 use Inpsyde\WPRESTStarter\Core\Route\Route;
-use Inpsyde\WPRESTStarter\Factory\PermissionCallback;
+use Inpsyde\WPRESTStarter\Factory;
 
 add_action( 'rest_api_init', function() {
 
@@ -137,12 +141,15 @@ add_action( 'rest_api_init', function() {
 	$routes = new Collection();
 
 	// Optional: Create a permission callback factory.
-	$permission = new PermissionCallback();
+	$permission = new Factory\PermissionCallback();
 
 	$endpoint_base = 'some-data-type';
 
-	// TODO: Set up the $handler for the READ request (implement ~\Common\Endpoint\RequestHandler).
-	// TODO: Optional: Set up according endpoint $args (implement ~\Common\Arguments).
+	// Set up the request handler (implement ~\Common\Endpoint\RequestHandler).
+	$handler = new Some\Custom\ReadRequestHandler( /* ...args */ );
+
+	// Optional: Set up an according endpoint $args object (implement ~\Common\Arguments).
+	$args = new Some\Custom\ReadArguments();
 
 	// Register a route for the READ endpoint.
 	$routes->add( new Route(
@@ -150,8 +157,11 @@ add_action( 'rest_api_init', function() {
 		Options::from_arguments( $handler, $args )
 	) );
 
-	// TODO: Set up the $handler for the CREATE request (implement ~\Common\Endpoint\RequestHandler).
-	// TODO: Optional: Set up according endpoint $args (implement ~\Common\Arguments).
+	// Set up the request handler (implement ~\Common\Endpoint\RequestHandler).
+	$handler = new Some\Custom\CreateRequestHandler( /* ...args */ );
+
+	// Optional: Set up an according endpoint $args object (implement ~\Common\Arguments).
+	$args = new Some\Custom\CreateArguments();
 
 	// Register a route for the CREATE endpoint.
 	$routes->add( new Route(
@@ -162,18 +172,121 @@ add_action( 'rest_api_init', function() {
 		] )
 	) );
 
-	// Optional: Register a route for the endpoint $schema object (implement ~\Common\Endpoint\Schema).
-	$routes->add( new Route(
-		$endpoint_base . '/schema',
-		Options::with_callback( [ $schema, 'get_schema' ] )
-	) );
-
-	// Register all routes in the given namespace.
+	// Register all routes in your desired namespace.
 	( new Registry( 'some-namespace-here' ) )->register_routes( $routes );
 } );
 ```
 
+### Registering a Complex Custom Route
+
+What follows is a more complete (and thus complex) example of registering a custom route.
+The nature of the resource is described by using an according schema object.
+Both the endpoint schema object and the request handlers are aware of additional fields registered by other parties for their individual resource.
+The response objects also contain links (compact, if supported).
+
+```php
+<?php
+
+use Inpsyde\WPRESTStarter\Core\Endpoint;
+use Inpsyde\WPRESTStarter\Core\Field;
+use Inpsyde\WPRESTStarter\Core\Request;
+use Inpsyde\WPRESTStarter\Core\Response;
+use Inpsyde\WPRESTStarter\Core\Route\Collection;
+use Inpsyde\WPRESTStarter\Core\Route\Options;
+use Inpsyde\WPRESTStarter\Core\Route\Registry;
+use Inpsyde\WPRESTStarter\Core\Route\Route;
+use Inpsyde\WPRESTStarter\Factory;
+
+add_action( 'rest_api_init', function() {
+
+	$namespace = 'some-namespace-here';
+
+	// Create a new route collection.
+	$routes = new Collection();
+
+	// Optional: Create a field access object.
+	$field_access = new Field\Access();
+
+	// Optional: Create a request field processor object.
+	$request_field_processor = new Request\FieldProcessor( $field_access );
+
+	// Optional: Create an endpoint schema field processor object.
+	$schema_field_processor = new Endpoint\FieldProcessor( $field_access );
+
+	// Create a permission callback factory.
+	$permission = new Factory\PermissionCallback();
+
+	// Create a response data access object.
+	$response_data_access = new Response\LinkAwareDataAccess();
+
+	// Create a response factory.
+	$response_factory = new Factory\Response();
+
+	// Set up a field-aware schema object (implement ~\Common\Endpoint\Schema).
+	$schema = new Some\Endpoint\Schema( $schema_field_processor );
+
+	$base = $schema->get_title();
+
+	// Optional: Set up a formatter taking care of data preparation.
+	$formatter = new Some\Endpoint\Formatter(
+		$schema,
+		$namespace,
+		new Response\SchemaAwareDataFilter( $schema ),
+		$response_factory,
+		$response_data_access
+	);
+
+	// Register a route for the READ endpoint.
+	$routes->add( new Route(
+		$base . '(?:/(?P<id>\d+))?',
+		Options::from_arguments(
+			new Some\Endpoint\ReadRequestHandler(
+				$maybe_some_external_api,
+				$formatter,
+				$schema,
+				$request_field_processor,
+				$response_factory
+			),
+			new Some\Endpoint\ReadEndpointArguments()
+		)->set_schema( $schema )
+	) );
+
+	// Register a route for the CREATE endpoint.
+	$routes->add( new Route(
+		$base,
+		Options::from_arguments(
+			new Some\Endpoint\CreateRequestHandler(
+				$maybe_some_external_api,
+				$formatter,
+				$schema,
+				$request_field_processor,
+				$response_factory
+			),
+			new Some\Endpoint\CreateEndpointArguments(),
+			WP_REST_Server::CREATABLE,
+			[
+				// Optional: Set a callback to check permission.
+				'permission_callback' => $permission->current_user_can( [ 'edit_posts', 'custom_cap' ] ),
+			]
+		)->set_schema( $schema )
+	) );
+
+	// Optional: Register a route for the endpoint schema.
+	$routes->add( new Route(
+		$base . '/schema',
+		Options::with_callback( [ $schema, 'get_schema' ] )
+	) );
+
+	// Register all routes in your desired namespace.
+	( new Registry( $namespace ) )->register_routes( $routes );
+} );
+```
+
 ### Adding Custom Fields to the Response of Existing Endpoints
+
+The below example shows how to register two additional fields to all response objects of the targeted resource.
+Of course, the according code that creates the response has to be aware of additional fields.
+This is the case when the code uses either the `WP_REST_Controller` class or a (custom) implementation of the field processor interfaces provided in this package.
 
 ```php
 <?php
@@ -187,9 +300,14 @@ add_action( 'rest_api_init', function() {
 	// Create a new field collection.
 	$fields = new Collection();
 
-	// TODO: Optional: Set up the $reader to READ the field value (implement ~\Common\Field\Reader).
-	// TODO: Optional: Set up the $updater to UPDATE the field value (implement ~\Common\Field\Updater).
-	// TODO: Optional: Create a field $schema object (implement ~\Common\Schema).
+	// Optional: Set up the field reader (implement ~\Common\Field\Reader).
+	$reader = new Some\Field\Reader();
+
+	// Optional: Set up the field updater (implement ~\Common\Field\Updater).
+	$updater = new Some\Field\Reader();
+
+	// Optional: Create a field schema (implement ~\Common\Schema).
+	$schema = new Some\Field\Schema();
 
 	// Register a read- and updatable field for some resource.
 	$fields->add(
@@ -200,7 +318,8 @@ add_action( 'rest_api_init', function() {
 			->set_schema( $schema )
 	);
 
-	// TODO: Set up the $reader to READ the field value (implement ~\Common\Field\Reader).
+	// Set up the field reader (implement ~\Common\Field\Reader).
+	$reader = new Some\Field\Reader();
 
 	// Register another read-only field for some resource.
 	$fields->add(
@@ -216,12 +335,37 @@ add_action( 'rest_api_init', function() {
 
 ### Example Endpoint Schema Implementation
 
+The below endpoint schema implementation is aware of fields registered by other parties for the current resource.
+By means of an injected (or defaulted) endpoint schema field processor object, the data of all registered schema-aware fields is added to the schema properties.
+
 ```php
 <?php
 
+use Inpsyde\WPRESTStarter\Common\Endpoint\FieldProcessor;
 use Inpsyde\WPRESTStarter\Common\Endpoint\Schema;
+use Inpsyde\WPRESTStarter\Core;
 
 class SomeEndpointSchema implements Schema {
+
+	/**
+	 * @var FieldProcessor
+	 */
+	private $field_processor;
+
+	/**
+	 * @var string
+	 */
+	private $title ='some-data-type';
+
+	/**
+	 * Constructor. Sets up the properties.
+	 *
+	 * @param FieldProcessor $field_processor Optional. Field processor object. Defaults to null.
+	 */
+	public function __construct( FieldProcessor $field_processor = null ) {
+
+		$this->field_processor = $field_processor ?: new Core\Endpoint\FieldProcessor();
+	}
 
 	/**
 	 * Returns the properties of the schema.
@@ -229,14 +373,16 @@ class SomeEndpointSchema implements Schema {
 	 * @return array Properties definition.
 	 */
 	public function get_properties() {
-
-		return [
+		
+		$properties = [
 			'id' => [
 				'description' => __( "The ID of the data object.", 'some-text-domain' ),
 				'type'        => 'integer',
 				'context'     => [ 'view', 'edit' ],
 			],
 		];
+
+		return $this->field_processor->get_extended_properties( $properties, $this->title );
 	}
 
 	/**
@@ -248,22 +394,54 @@ class SomeEndpointSchema implements Schema {
 
 		return [
 			'$schema'    => 'http://json-schema.org/draft-04/schema#',
-			'title'      => 'some-data-type',
+			'title'      => $this->title,
 			'type'       => 'object',
 			'properties' => $this->get_properties(),
 		];
+	}
+
+	/**
+	 * Returns the schema title.
+	 *
+	 * @return string Schema title.
+	 */
+	public function get_title() {
+
+		return $this->title;
 	}
 }
 ```
 
 ### Example Endpoint Arguments Implementation
 
+An endpoint arguments implementation is straightforward, and in most cases only a single method returning a hard-coded array.
+The below code also contains a validate callback that returns a `WP_Error` object on failure.
+
 ```php
 <?php
 
 use Inpsyde\WPRESTStarter\Common\Arguments;
+use Inpsyde\WPRESTStarter\Common\Factory;
+use Inpsyde\WPRESTStarter\Factory\Error;
 
 class SomeEndpointArguments implements Arguments {
+
+	/**
+	 * @var Factory
+	 */
+	private $error_factory;
+
+	/**
+	 * Constructor. Sets up the properties.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param Factory $error_factory Optional. Error factory object. Defaults to null.
+	 */
+	public function __construct( Factory $error_factory = null ) {
+
+		$this->error_factory = $error_factory ?: new Error();
+	}
 
 	/**
 	 * Returns the arguments in array form.
@@ -278,6 +456,19 @@ class SomeEndpointArguments implements Arguments {
 				'type'        => 'integer',
 				'minimum'     => 1,
 				'required'    => true,
+				'validate_callback' => function ( $value ) {
+					if ( is_numeric( $value ) ) {
+						return true;
+					}
+
+					return $this->error_factory->create( [
+						'no_numeric_id',
+						__( "IDs have to be numeric.", 'some-text-domain' ),
+						[
+							'status' => 400,
+						],
+					] );
+				},
 			],
 			'type' => [
 				'description' => __( "The type of the data object.", 'some-text-domain' ),
@@ -291,14 +482,22 @@ class SomeEndpointArguments implements Arguments {
 
 ### Example Request Handler Implementation
 
+This (update) request handler is aware of additional fields.
+It uses an external API to work with the data.
+Data preparation is done by a dedicated formatter.
+
 ```php
 <?php
 
-use Inpsyde\WPRESTStarter\Common\Endpoint\RequestHandler;
+use Inpsyde\WPRESTStarter\Common\Endpoint;
+use Inpsyde\WPRESTStarter\Common\Factory;
+use Inpsyde\WPRESTStarter\Common\Request\FieldProcessor;
+use Inpsyde\WPRESTStarter\Core;
 use Inpsyde\WPRESTStarter\Factory\Response;
+use Some\Endpoint\Formatter;
 use Some\External\API;
 
-class SomeRequestHandler implements RequestHandler {
+class SomeRequestHandler implements Endpoint\RequestHandler {
 
 	/**
 	 * @var API
@@ -306,21 +505,51 @@ class SomeRequestHandler implements RequestHandler {
 	private $api;
 
 	/**
-	 * @var Response
+	 * @var FieldProcessor
 	 */
-	private $response;
+	private $field_processor;
+
+	/**
+	 * @var Formatter
+	 */
+	private $formatter;
+
+	/**
+	 * @var string
+	 */
+	private $object_type;
+
+	/**
+	 * @var Factory
+	 */
+	private $response_factory;
 
 	/**
 	 * Constructor. Sets up the properties.
 	 *
-	 * @param API      $api      External data API object.
-	 * @param Response $response Response factory object.
+	 * @param API             $api              API object.
+	 * @param Formatter       $formatter        Formatter object.
+	 * @param Endpoint\Schema $schema           Optional. Schema object. Defaults to null.
+	 * @param FieldProcessor  $field_processor  Optional. Response factory object. Defaults to null.
+	 * @param Factory         $response_factory Optional. Response factory object. Defaults to null.
 	 */
-	public function __construct( API $api, Response $response ) {
+	public function __construct(
+		API $api,
+		Formatter $formatter,
+		Endpoint\Schema $schema = null,
+		FieldProcessor $field_processor = null,
+		Factory $response_factory = null
+	) {
 
 		$this->api = $api;
 
-		$this->response = $response;
+		$this->formatter = $formatter;
+
+		$this->object_type = $schema ? $schema->get_title() : '';
+
+		$this->field_processor = $field_processor ?: new Core\Request\FieldProcessor();
+
+		$this->response_factory = $response_factory ?: new Response();
 	}
 
 	/**
@@ -332,12 +561,12 @@ class SomeRequestHandler implements RequestHandler {
 	 */
 	public function handle_request( WP_REST_Request $request ) {
 
-		$id = $request->get_param( 'id' );
+		$id = $request['id'];
 
 		// Update the according object data by using the injected data API.
 		if ( ! $this->api->update_data( $id, $request->get_body_params() ) ) {
 			// Ooops! Send an error response.
-			return $this->response->create( [
+			return $this->response_factory->create( [
 				[
 					'code'    => 'could_not_update',
 					'message' => __( "The object could not be updated.", 'some-text-domain' ),
@@ -347,13 +576,30 @@ class SomeRequestHandler implements RequestHandler {
 			] );
 		}
 
+		// Get the (updated) data from the API.
+		$data = $this->api->get_data( $id );
+
+		// Prepare the data for the response.
+		$data = $this->formatter->format(
+			$data,
+			empty( $request['context'] ) ? 'view' : $request['context']
+		);
+
+		// Update potential fields registered for the resource.
+		$this->field_processor->update_fields_for_object( $data, $request, $this->object_type );
+
+		// Add the data of potential fields registered for the resource.
+		$data = $this->field_processor->add_fields_to_object( $data, $request, $this->object_type );
+
 		// Send a response object containing the updated data.
-		return $this->response->create( [ $this->api->get_data( $id ) ] );
+		return $this->response_factory->create( [ $data ] );
 	}
 }
 ```
 
 ### Example Field Schema Implementation
+
+The schema of a field is not more than a definition in array form.
 
 ```php
 <?php
@@ -380,6 +626,9 @@ class SomeFieldSchema implements Schema {
 
 ### Example Field Reader Implementation
 
+The below field reader implementation uses a global callback to get the field value.
+You could also inject an API object and use provided methods.
+
 ```php
 <?php
 
@@ -390,13 +639,19 @@ class SomeFieldReader implements Reader {
 	/**
 	 * Returns the value of the field with the given name of the given object.
 	 *
-	 * @param array           $object     Object data in array form.
-	 * @param string          $field_name Field name.
-	 * @param WP_REST_Request $request    Request object.
+	 * @param array           $object      Object data in array form.
+	 * @param string          $field_name  Field name.
+	 * @param WP_REST_Request $request     Request object.
+	 * @param string          $object_type Optional. Object type. Defaults to empty string.
 	 *
-	 * @return bool Field value.
+	 * @return mixed Field value.
 	 */
-	public function get_value( array $object, $field_name, WP_REST_Request $request ) {
+	public function get_value(
+		array $object,
+		$field_name,
+		WP_REST_Request $request,
+		$object_type = ''
+	) {
 
 		if ( empty( $object['id'] ) ) {
 			return false;
@@ -408,6 +663,10 @@ class SomeFieldReader implements Reader {
 ```
 
 ### Example Field Updater Implementation
+
+The below field updater implementation uses a global callback to update the field value.
+You could also inject an API object and use provided methods.
+The injected permission callback, if any, is used to check permission prior to updating the field.
 
 ```php
 <?php
@@ -436,13 +695,21 @@ class SomeFieldUpdater implements Updater {
 	/**
 	 * Updates the value of the field with the given name of the given object to the given value.
 	 *
-	 * @param mixed  $value      New field value.
-	 * @param object $object     Object from the response.
-	 * @param string $field_name Field name.
+	 * @param mixed           $value       New field value.
+	 * @param object          $object      Object data.
+	 * @param string          $field_name  Field name.
+	 * @param WP_REST_Request $request     Optional. Request object. Defaults to null.
+	 * @param string          $object_type Optional. Object type. Defaults to empty string.
 	 *
 	 * @return bool Whether or not the field was updated successfully.
 	 */
-	public function update_value( $value, $object, $field_name ) {
+	public function update_value(
+		$value,
+		$object,
+		$field_name,
+		WP_REST_Request $request = null,
+		$object_type = ''
+	) {
 
 		if ( $this->permission_callback && ! call_user_func( $this->permission_callback ) ) {
 			return false;
@@ -453,6 +720,137 @@ class SomeFieldUpdater implements Updater {
 		}
 
 		return some_field_updater_callback( $object->id, $field_name, (bool) $value );
+	}
+}
+```
+
+### Example Formatter Implementation
+
+It is a good idea to separate handling a request and preparing the response data.
+For this reason, the following code shows a potential formatter, even though it is not actually part of this package.
+
+```php
+<?php
+
+use Inpsyde\WPRESTStarter\Common\Endpoint\Schema;
+use Inpsyde\WPRESTStarter\Common\Factory;
+use Inpsyde\WPRESTStarter\Common\Response\DataAccess;
+use Inpsyde\WPRESTStarter\Common\Response\DataFilter;
+use Inpsyde\WPRESTStarter\Core\Response\LinkAwareDataAccess;
+use Inpsyde\WPRESTStarter\Factory\Response;
+
+class SomeFormatter {
+
+	/**
+	 * @var string
+	 */
+	private $link_base;
+
+	/**
+	 * @var array
+	 */
+	private $properties;
+
+	/**
+	 * @var DataAccess
+	 */
+	private $response_data_access;
+
+	/**
+	 * @var DataFilter
+	 */
+	private $response_data_filter;
+
+	/**
+	 * @var Factory
+	 */
+	private $response_factory;
+
+	/**
+	 * Constructor. Sets up the properties.
+	 *
+	 * @param Schema     $schema               Schema object.
+	 * @param string     $namespace            Namespace.
+	 * @param DataFilter $response_data_filter Response data filter object.
+	 * @param Factory    $response_factory     Optional. Response factory object. Defaults to null.
+	 * @param DataAccess $response_data_access Optional. Response data access object. Defaults to null.
+	 */
+	public function __construct(
+		Schema $schema,
+		$namespace,
+		DataFilter $response_data_filter,
+		Factory $response_factory = null,
+		DataAccess $response_data_access = null
+	) {
+
+		$this->properties = $schema->get_properties();
+
+		$this->link_base = $namespace . '/' . $schema->get_title();
+
+		$this->response_data_filter = $response_data_filter;
+
+		$this->response_factory = $response_factory ?: new Response();
+
+		$this->response_data_access = $response_data_access ?: new LinkAwareDataAccess();
+	}
+
+	/**
+	 * Returns a formatted representation of the given data.
+	 *
+	 * @param array  $raw_data Raw data.
+	 * @param string $context  Optional. Request context. Defaults to 'view'.
+	 *
+	 * @return mixed The formatted representation of the given data.
+	 */
+	public function format( array $raw_data, $context = 'view' ) {
+
+		$data = [];
+
+		foreach ( $raw_data as $set ) {
+			$item = [];
+
+			$item['id'] = isset( $set['id'] ) ? absint( $set['id'] ) : 0;
+
+			$item['name'] = isset( $set['name'] ) ? (string) $set['name'] : '';
+
+			$item['redirect'] = isset( $set['redirect'] ) ? (bool) $set['redirect'] : false;
+
+			$item = $this->response_data_filter->filter_data( $item, $context );
+
+			$response = $this->get_response_with_links( $item, $set );
+
+			$data[] = $this->response_data_access->get_data( $response );
+		}
+
+		return $data;
+	}
+
+	/**
+	 * Returns a response object with the given data and all relevant links.
+	 *
+	 * @param array $data Response data.
+	 * @param array $set  Single data set.
+	 *
+	 * @return WP_REST_Response The response object with the given data and all relevant links.
+	 */
+	private function get_response_with_links( array $data, array $set ) {
+
+		$links = [];
+
+		if ( isset( $set['id'] ) ) {
+			$links['self'] = [
+				'href' => rest_url( $this->link_base . '/' . absint( $set['id'] ) ),
+			];
+		}
+
+		$links['collection'] = [
+			'href' => rest_url( $this->link_base ),
+		];
+
+		$response = $this->response_factory->create( [ $data ] );
+		$response->add_links( $links );
+
+		return $response;
 	}
 }
 ```
