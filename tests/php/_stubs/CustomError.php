@@ -3,7 +3,7 @@
 /**
  * Stub for factory tests.
  *
- * @since 1.0.0
+ * @since 2.0.0
  */
 class CustomError extends WP_Error {
 
