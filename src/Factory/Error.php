@@ -47,23 +47,23 @@ final class Error implements Common\Factory {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param array  $constructor_args Optional. Constructor arguments. Defaults to empty array.
-	 * @param string $class            Optional. Fully qualified class name. Defaults to empty string.
+	 * @param array  $args  Optional. Constructor arguments. Defaults to empty array.
+	 * @param string $class Optional. Fully qualified class name. Defaults to empty string.
 	 *
 	 * @return WP_Error WordPress error object.
 	 *
 	 * @throws Exception if caught any and WP_DEBUG is set to true.
 	 */
-	public function create( array $constructor_args = [], $class = '' ) {
+	public function create( array $args = [], $class = '' ) {
 
 		try {
-			$object = $this->factory->create( $constructor_args, (string) $class );
+			$object = $this->factory->create( $args, (string) $class );
 		} catch ( Exception $e ) {
 			if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
 				throw $e;
 			}
 
-			return $this->factory->create( $constructor_args, '\WP_Error' );
+			return $this->factory->create( $args, self::BASE );
 		}
 
 		return $object;
