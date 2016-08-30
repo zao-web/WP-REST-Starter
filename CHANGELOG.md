@@ -14,14 +14,6 @@
 * **Add** optional `$object_type` parameter to `~\Common\Field\Reader` interface.
 * **Add** optional `$request` and `$object_type` parameters to `~\Common\Field\Updater` interface.
 
-### TODO
-
-* Write tests for:
-  * `~\Core\Factory`;
-  * `~\Core\Factory\Error`;
-  * `~\Core\Factory\PermissionCallback`;
-  * `~\Core\Factory\Response`.
-
 ## 1.1.0
 
 * **Introduce** `~\Common\Endpoint\RequestHandler` interface.
