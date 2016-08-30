@@ -117,6 +117,7 @@ class FieldProcessorTest extends TestCase {
 	 *
 	 * @covers Inpsyde\WPRESTStarter\Core\Request\FieldProcessor::__construct()
 	 * @covers Inpsyde\WPRESTStarter\Core\Request\FieldProcessor::add_fields_to_object()
+	 * @expectedException \PHPUnit_Framework_Error_Notice
 	 * @runInSeparateProcess
 	 *
 	 * @return void
@@ -141,11 +142,6 @@ class FieldProcessorTest extends TestCase {
 					'get_callback' => 'invalid callback',
 				],
 			] );
-
-		$this->setExpectedException(
-			'PHPUnit_Framework_Error_Notice',
-			"Invalid callback. Cannot read {$field_name} field for {$object_type}."
-		);
 
 		( new Testee( $field_access ) )->add_fields_to_object( $object, $request, $object_type );
 	}
@@ -275,6 +271,7 @@ class FieldProcessorTest extends TestCase {
 	 *
 	 * @covers Inpsyde\WPRESTStarter\Core\Request\FieldProcessor::__construct()
 	 * @covers Inpsyde\WPRESTStarter\Core\Request\FieldProcessor::update_fields_for_object()
+	 * @expectedException \PHPUnit_Framework_Error_Notice
 	 * @runInSeparateProcess
 	 *
 	 * @return void
@@ -301,11 +298,6 @@ class FieldProcessorTest extends TestCase {
 					'update_callback' => 'invalid callback',
 				],
 			] );
-
-		$this->setExpectedException(
-			'PHPUnit_Framework_Error_Notice',
-			"Invalid callback. Cannot update {$field_name} field for {$object_type}."
-		);
 
 		( new Testee( $field_access ) )->update_fields_for_object( $object, $request, $object_type );
 	}

@@ -19,12 +19,11 @@ class FactoryTest extends TestCase {
 	 * @since  2.0.0
 	 *
 	 * @covers Inpsyde\WPRESTStarter\Core\Factory::__construct()
+	 * @expectedException \InvalidArgumentException
 	 *
 	 * @return void
 	 */
 	public function test_construction_with_invalid_base_fails() {
-
-		$this->setExpectedException( 'InvalidArgumentException' );
 
 		new Testee( '\InvalidFQN' );
 	}
@@ -35,12 +34,11 @@ class FactoryTest extends TestCase {
 	 * @since  2.0.0
 	 *
 	 * @covers Inpsyde\WPRESTStarter\Core\Factory::__construct()
+	 * @expectedException \InvalidArgumentException
 	 *
 	 * @return void
 	 */
 	public function test_construction_with_no_valid_class_fails() {
-
-		$this->setExpectedException( 'InvalidArgumentException' );
 
 		new Testee( '\ArrayAccess' );
 	}
@@ -51,12 +49,11 @@ class FactoryTest extends TestCase {
 	 * @since  2.0.0
 	 *
 	 * @covers Inpsyde\WPRESTStarter\Core\Factory::__construct()
+	 * @expectedException \Inpsyde\WPRESTStarter\Exception\InvalidClassException
 	 *
 	 * @return void
 	 */
 	public function test_construction_with_invalid_default_class_fails() {
-
-		$this->setExpectedException( 'Inpsyde\WPRESTStarter\Exception\InvalidClassException' );
 
 		new Testee( '\ArrayAccess', '\InvalidFQN' );
 	}
@@ -68,12 +65,11 @@ class FactoryTest extends TestCase {
 	 *
 	 * @covers Inpsyde\WPRESTStarter\Core\Factory::__construct()
 	 * @covers Inpsyde\WPRESTStarter\Core\Factory::create()
+	 * @expectedException \Inpsyde\WPRESTStarter\Exception\InvalidClassException
 	 *
 	 * @return void
 	 */
 	public function test_creation_with_invalid_class_fails() {
-
-		$this->setExpectedException( 'Inpsyde\WPRESTStarter\Exception\InvalidClassException' );
 
 		( new Testee( '\ArrayObject' ) )->create( [], '\InvalidFQN' );
 	}

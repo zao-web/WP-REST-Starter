@@ -39,6 +39,7 @@ class RegistryTest extends TestCase {
 	 * @since  1.0.0
 	 *
 	 * @covers Inpsyde\WPRESTStarter\Core\Field\Registry::register_fields()
+	 * @expectedException \PHPUnit_Framework_Error_Notice
 	 * @runInSeparateProcess
 	 *
 	 * @return void
@@ -46,8 +47,6 @@ class RegistryTest extends TestCase {
 	public function test_register_fields_triggers_notice() {
 
 		define( 'WP_DEBUG', true );
-
-		$this->setExpectedException( 'PHPUnit_Framework_Error_Notice' );
 
 		( new Testee() )->register_fields( Mockery::mock( 'Inpsyde\WPRESTStarter\Common\Field\Collection' ) );
 	}
