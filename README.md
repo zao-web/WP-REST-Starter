@@ -83,7 +83,7 @@ When using the default field registry class, `Inpsyde\WPRESTStarter\Core\Field\R
 
 use Inpsyde\WPRESTStarter\Common\Field\Collection;
 
-add_action( 'wp_rest_starter.register_routes', function ( Collection $fields ) {
+add_action( 'wp_rest_starter.register_fields', function ( Collection $fields ) {
 
 	// Remove a specific field from all post resources.
 	$fields->delete( 'post', 'some-field-with-sensible-data' );
