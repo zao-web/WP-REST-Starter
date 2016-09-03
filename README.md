@@ -39,7 +39,7 @@ All you have to do is configure your REST routes and data structures, and implem
 
 ## Installation
 
-Install with Composer:
+Install with [Composer](https://getcomposer.org):
 
 ```sh
 $ composer require inpsyde/wp-rest-starter
